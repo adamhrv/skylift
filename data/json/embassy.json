@@ -1,0 +1,87 @@
+[
+    {
+        "bssid": "A0:56:B2:91:67:6D", 
+        "channel": "6", 
+        "ssid": "MB WLAN 59210"
+    }, 
+    {
+        "bssid": "80:71:7A:9D:6F:70", 
+        "channel": "9", 
+        "ssid": "TALKTALK9D6F67"
+    }, 
+    {
+        "bssid": "C0:3E:0F:C3:11:15", 
+        "channel": "5", 
+        "ssid": "SKYDC5C1"
+    }, 
+    {
+        "bssid": "7C:4C:A5:69:70:C1", 
+        "channel": "9", 
+        "ssid": "SKYF3AE2"
+    }, 
+    {
+        "bssid": "84:18:3A:24:60:88", 
+        "channel": "11", 
+        "ssid": "Clear 2.4g"
+    }, 
+    {
+        "bssid": "26:6A:9B:EE:E1:A0", 
+        "channel": "11", 
+        "ssid": "Guest Network"
+    }, 
+    {
+        "bssid": "12:8E:38:21:83:E6", 
+        "channel": "11", 
+        "ssid": "Parrot_00:26:7E:16:93:B5"
+    }, 
+    {
+        "bssid": "AC:84:C9:AB:F9:74", 
+        "channel": "1", 
+        "ssid": "Happy"
+    }, 
+    {
+        "bssid": "C0:3E:0F:87:E2:45", 
+        "channel": "11", 
+        "ssid": "SKY7CB62"
+    }, 
+    {
+        "bssid": "02:8A:AE:91:7F:AC", 
+        "channel": "6", 
+        "ssid": "BTWi-fi"
+    }, 
+    {
+        "bssid": "32:CD:A7:AF:FB:10", 
+        "channel": "11", 
+        "ssid": "DIRECT-ICM2020 Series"
+    }, 
+    {
+        "bssid": "1C:49:7B:18:D3:54", 
+        "channel": "5", 
+        "ssid": "Relish_Home_18D356"
+    }, 
+    {
+        "bssid": "A0:8D:16:8A:DC:D8", 
+        "channel": "1", 
+        "ssid": "TALKTALK8ADCD1"
+    }, 
+    {
+        "bssid": "00:62:2C:09:6C:34", 
+        "channel": "11", 
+        "ssid": "BTHub5-C9NP"
+    }, 
+    {
+        "bssid": "9C:80:DF:E2:9F:26", 
+        "channel": "1", 
+        "ssid": "BTHub5-5ZJ7"
+    }, 
+    {
+        "bssid": "EC:8E:B5:F5:0A:7E", 
+        "channel": "9", 
+        "ssid": "DIRECT-7D-HP ENVY 4520 series"
+    }, 
+    {
+        "bssid": "1C:49:7B:17:78:37", 
+        "channel": "4", 
+        "ssid": "Relish_Home_177839"
+    }
+]
