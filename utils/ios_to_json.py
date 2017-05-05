@@ -1,6 +1,7 @@
+#!/usr/bin/env python
+#coding=utf-8
+
 import sys  
-#reload(sys)  
-#sys.setdefaultencoding('utf8')
 import os,sys
 from os.path import join
 import csv
@@ -8,11 +9,20 @@ import json
 import argparse
 
 '''
-#ssid = unicode(ssid, 'utf-8')
-#ssid = unicodedata.normalize('NFKD', ssid).encode('ascii','ignore')
-# encoding=utf8  
-todo: add directory input
-#import unicodedata
+S K Y L I F T
+https://github.com/adamhrv/skylift
+
+WiFi utility script
+
+- Reads in data from an iOS WiFi scan
+- Outputs JSON formatted data
+- Run the "json_to_arduino.py" script on this output to create Arduino code
+- Assumes the first two lines are header information
+'''
+
+'''
+Example:
+python utils/ios_to_json.py -i data/ios/your_scan.txt -o data/json/your_scan.json
 '''
 
 def parse(args):

@@ -1,4 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+#coding=utf-8
+
 import sys, os
 import json
 import argparse
@@ -6,6 +8,10 @@ import subprocess
 import plistlib
 
 '''
+
+https://github.com/adamhrv/skylift
+
+
 TODO
 - fix folder paths
 - 

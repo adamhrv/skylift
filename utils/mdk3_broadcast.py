@@ -9,7 +9,12 @@ import time
 import signal
 import RPi.GPIO as GPIO	
 
+'''
+S K Y L I F T
+https://github.com/adamhrv/skylift
 
+WiFi utility script
+'''
   
 
 def isMonitorModeEnabled():

@@ -1,13 +1,36 @@
+#!/usr/bin/env python
+#coding=utf-8
+
 import sys, os
 import requests
 import json
 import argparse
 
+
+'''
+S K Y L I F T
+https://github.com/adamhrv/skylift
+
+Wigle API for SkyLift
+
+- Register at Wigle.net and obtain your API Key and Token first
+- Loads data for Wigle API
+- Outputs JSON formatted data
+- Run the "json_to_arduino.py" script on this output to create Arduino code
+'''
+
+'''
+Example:
+python wigle_to_json.py --lat 37.484581 --lon -122.147921 --radius 3 -o facebook_r3.json
+'''
+
+
+
 '''
 Get Lat/Lon here: 
 http://www.latlong.net/convert-address-to-lat-long.html
 
-python wigle_to_json.py --lat 37.484581 --lon -122.147921 --radius 3 -o facebook_r3.json
+
 '''
 
 '''

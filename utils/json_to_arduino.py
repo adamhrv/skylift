@@ -1,9 +1,27 @@
+#!/usr/bin/env python
+#coding=utf-8
+
 import sys, os
 from os.path import basename, join
 import requests
 import json
 import argparse
 from random import randint
+
+'''
+S K Y L I F T
+https://github.com/adamhrv/skylift
+
+WiFi utility script
+
+- Converts JSON to Arduino code
+'''
+
+'''
+Example:
+python utils/json_to_arduino.py -i data/ios/your_scan.json -o data/ino/your_scan.txt
+'''
+
 
 def parse(args):
     bssids = []

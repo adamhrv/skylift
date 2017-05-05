@@ -1,13 +1,14 @@
 # SkyLift V0.3 
 
-SkyLift is a low-cost geolocation spoofing device that uses the ESP8266 to broadcast WiFi Beacon Frames to exploit a longstanding (2008) vulnerability in WiFi geolocation services
+SkyLift is a low-cost geolocation spoofing device. It currently uses the ESP8266 to broadcast WiFi Beacon Frames to exploit a longstanding (2008) vulnerability in WiFi geolocation services.
 
-![](docs/images/skylift_anim_overview.gif)
+This 3rd prototype version of SkyLift was further developed during a web residency with [Akademie Schloss Solitude](https://schloss-post.com/skylift-low-cost-geo-location-spoofing-device/) & [ZKM](http://webresidencies-solitude-zkm.com/). Read an [interview](https://schloss-post.com/the-future-of-living-with-surveillance/) about the project. Or build your own with the instructions below for less than $5.
 
 
-Version 0.3, made for a web residency at Schloss Solitude, makes improvements over the initial version (SkyLift V0.1) made in collaboration with [Surya Mattu](http://suryamattu.com) for the [!Mediengruppe Bitnik's](http://wwwwwwwwwwwwwwwwwwwwww.bitnik.org/) Assange room Welcome to Ecuador!" show at Zoo Galerie in Nantes in 2016.
+![](docs/images/skylift_schloss_solitude_zkm.gif)
 
-SkyLift V0.3 includes the following improvements:
+
+SkyLift was originally developed in collaboration with [Surya Mattu](http://suryamattu.com) for [!Mediengruppe Bitnik's](http://wwwwwwwwwwwwwwwwwwwwww.bitnik.org/) Assange room Welcome to Ecuador!" show at Zoo Galerie in Nantes in 2016. Development for this updated version, V0.3, began in November 2016 and was finally released in May 2017 with support from a web residency at Schloss Solitude. This version makes several improvements over the initial system (SkyLift V0.1), including:
 
 - reduced build cost from $50 to about $5
 - reduced setup time for core technology from several hours to about 15 minutes
@@ -213,7 +214,7 @@ What is certain, and was already proven in 2008, is that smartphone geolocation 
 - [Beacon Frame Overview](https://en.wikipedia.org/wiki/Beacon_frame)
 - [Beacon Frame Packet](https://mrncciew.com/2014/10/08/802-11-mgmt-beacon-frame/) in more depth
 - [Spoofing WiFi Geolocation services](http://www.senet-int.com/2013/12/wi-fi-geo-location/) on Hackaday
-- [Dont' Trust Geolocation](http://www.journaldulapin.com/2013/08/26/dont-trust-geolocation/)
+- [Don't Trust Geolocation](http://www.journaldulapin.com/2013/08/26/dont-trust-geolocation/)
 - [Device-to-Identity Linking Attack Using Targeted Wi-Fi Geolocation Spoofing](https://hal.inria.fr/hal-01176842/document)
 - [SkyLift V0.1 post on using MDK3 + Raspberry Pi](https://ahprojects.com/notebook/2016/skylift-geolocation/)
 
@@ -223,7 +224,7 @@ What is certain, and was already proven in 2008, is that smartphone geolocation 
 - Currently intended for research and artistic purposes only
 - Check local WiFi regulations before using 
 - After a sustained duration of broadcasting,  BSSIDs may be blacklisted or even become associated with another location (this happened at [FACT Liverpool](http://www.fact.co.uk/), which could reveal your location to other users, or be used creatively for a *Bermuda Triangle* effect.
-- SkyLift is not a GPS spoofing device. For 1.5GHz GPS spoofing, see [Spoof GPS location with low cost TX SDRs](http://hackaday.com/2016/07/19/pokemon-go-cheat-fools-gps-with-software-defined-radio/)
+- SkyLift is not a GPS spoofing device. For 1.5GHz GPS spoofing, see [Spoof GPS location with low cost TX SDRs](http://hackaday.com/2016/07/19/pokemon-go-cheat-fools-gps-with-software-defined-radio/) or [Software-Defined GPS Signal Simulator](https://github.com/osqzss/gps-sdr-sim)
 - SkyLift is currently a 2.4GHz only device
 - **SkyLift is not a guaranteed solution**
 
