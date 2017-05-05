@@ -45,14 +45,13 @@ If you're interested in obtaining a completed and ready-to-use device add yourse
 What you'll need:
 
 - Arduino 1.6.12+
-- ESP8266 NodeMCU 12 or 12E | [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/)
-- Alternative: The [Adafruit Huzzah](https://www.adafruit.com/product/2821) also works great and has a rechargeable LiPo circuit
+- ESP8266 NodeMCU 12 or 12E | [eBay](http://www.ebay.com/itm/NodeMcu-Lua-WIFI-Internet-Things-development-board-based-ESP8266-CP2102-module-/201542946669?hash=item2eece54f6d:g:EOIAAOSw4q9XT5mo), [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/), [Adafruit Huzzah](https://www.adafruit.com/product/2821)
 - USB micro cable for programming
 - (optional) 5V USB battery
 
 With OLED display (optional):
 
-- OLED display | [Amazon.com](https://www.amazon.com/LANMU-Serial-128X64-Display-Arduino/dp/B01G6SAWNY/)
+- OLED display | [eBay](http://www.ebay.com/itm/0-96-I2C-IIC-SPI-Serial-128X64-White-OLED-LCD-LED-Display-Module-for-Arduino-/201428440360?hash=item2ee6121528:g:MOYAAOSwv0tVeD0N), [Amazon.com](https://www.amazon.com/LANMU-Serial-128X64-Display-Arduino/dp/B01G6SAWNY/)
 - PCB 3x7cm (only if using OLED display) | [Amazon.com](https://www.amazon.com/Frentaly-Prototype-Circuit-Breadboard-Universal/dp/B018BD9ZJO/)
 - Soldering iron 
 - OLED library [Adafruit_SSD1306](https://github.com/adafruit/Adafruit_SSD1306) library
