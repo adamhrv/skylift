@@ -31,7 +31,7 @@ If you're interested in obtaining a completed and ready-to-use device add yourse
 
 ## Quick Start
 
-- Purchase an ESP8266 NodeMCU 12 or 12E | [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/) or try eBay
+- Purchase an ESP8266 NodeMCU 12 or 12E | [eBay](http://www.ebay.com/itm/NodeMcu-Lua-WIFI-Internet-Things-development-board-based-ESP8266-CP2102-module-/201542946669?hash=item2eece54f6d:g:EOIAAOSw4q9XT5mo) (cheaper) or [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/) (quicker)
 - `git clone https://github.com/adamhrv/skylift/`
 - From "`arduino/skylift_v03_embassy"` upload the sketch `"skylift_v03_embassy.ino"`
 - Ensure your smartphone's WiFi geolocation service is enbaled
@@ -58,7 +58,7 @@ With OLED display (optional):
 - ESP8266 libraries: "http://arduino.esp8266.com/stable/package_esp8266com_index.json"
 - Wire cutters to trim the headers after soldering
 
-Both the OLED display and ESP8266 NodeMCU can be purchased for about half-price on ebay if you're willing to wait 1-2 weeks for delivery.
+Both the OLED display and ESP8266 NodeMCU can be purchased for about half-price on ebay if you're willing to wait 1-2 weeks for delivery. ESP8266 can be as low as $3.
 
 ## Test Scripts
 
@@ -203,7 +203,7 @@ SkyLift makes use of an *exploit* with WiFi geolocation services that was first 
 
 The vulnerability is difficult to deal with because WiFi geolocation companies assume everyone's WiFi router, including the one inside your home, is part of a their commercial geolocation product. Whether or not this is legal or ethical should be more openly debated. 
 
-What is certain, and was already proven in 2008, is that smartphone geolocation data can be easily falsified and should not be trusted. Yet we rely know rely on this data for an increasing number of critical applications. For example, the image below shows how easily I was able to trick Apple's Find my Phone service into thinking my device was at the Ecuadorian Embassy in London. (Image made with device actually in Berlin)
+What is certain, and was already proven in 2008, is that smartphone geolocation data can be easily falsified and should not be trusted. Yet we rely on this technology for an increasing number of critical applications. For example, the image below shows how easily I was able to trick Apple's Find my Phone service into thinking my device was at the Ecuadorian Embassy in London. (Image made with device actually in Berlin, works with Desktop or mobile device).
 
 ![Find my Phone at Ecuadorian Embassy](docs/images/berlin-london-find-my-phone.gif)
 
