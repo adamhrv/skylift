@@ -47,7 +47,7 @@ What you'll need:
 - Arduino 1.6.12+
 - ESP8266 NodeMCU 12 or 12E | [eBay](http://www.ebay.com/itm/NodeMcu-Lua-WIFI-Internet-Things-development-board-based-ESP8266-CP2102-module-/201542946669?hash=item2eece54f6d:g:EOIAAOSw4q9XT5mo), [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/), [Adafruit Huzzah](https://www.adafruit.com/product/2821)
 - USB micro cable for programming
-- (optional) 5V USB battery
+- 5V USB battery (optional) 
 
 With OLED display (optional):
 
@@ -87,7 +87,7 @@ Both the OLED display and ESP8266 NodeMCU can be purchased for about half-price 
 
 ### Test SkyLift with Ecuadorian Embassy Location
 
-- Upload the `Arduino/skylift_v03_01` sketch
+- Upload the `Arduino/skylift_v03_embassy` sketch
 - Make sure you've enabled WiFi location services on your phone
 - Make sure you have an active data connection (Cellular or WiFi. Your IP address does not matter)
 - Open your preferred mapping application (or any app that uses your location)
@@ -103,8 +103,8 @@ Tips for improving performance:
 - Ensure phone is close to ESP8266 (ideally 0.1 - 1m away in busy WiFi zones, 1-2m away in medium-density WiFi zones, up to 10m away in low-density WiFi zones) and far away from nearby routers.
 - For distances beyond 10m you can cut the PCB trace antenna and solder a SMA connector to add a +7dB antenna or WiFi amplifier or, more simply, add multiple SkyLift devices to act as repeaters
 - Metal roofs and structure will attenuate nearby WiFi signals
-- Sheetrock, wood, and concrete are permeable to WiFi and will not attenuate signal
-- People, comprising about 65% water, are natural WiFi absorbers (2.4GHz is the resonant frequency of water) and will function to dampen nearby WiFi signals in crowded environments
+- Sheetrock, wood, and concrete are permeable to WiFi and will not noticeably attenuate signal
+- People, comprising about 65% water, are natural WiFi absorbers (2.4GHz is the resonant frequency of water) and will function to dampen nearby WiFi signals in crowded environments, resulting in better performance for geolocation spoofing in crowded areas
 - Recommended locations for optimal performance are bunkers and bars or other areas where GPS, cellular and WiFi signals are reduced. But feel free to experiment anywhere.
 - The best results so far have been achieved in the basement at La Gaîté Lyrique, at concerts, and in a controlled (of course) testing environment.
 - Note: **SkyLift is not a guaranteed solution**. If there are too many competing WiFi signals nearby the location service API will return a low confidence score and fallback to cellular triangulation or space-based GPS.
@@ -141,7 +141,7 @@ SSID, BSS, RSSI, Channel, Time
 ```
 Save your file to "data/ios/your_scan.txt" and then run:
 
-`python utils/ios_to_json.py -i data/ios/your_scan.txt -o data/json/your_scan.json --api-token [yourapitoken] --api-key [yourapikey]`
+`python utils/ios_to_json.py -i data/ios/your_scan.txt -o data/json/your_scan.json`
 
 
 **1C) Use Wigle API**
