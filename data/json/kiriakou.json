@@ -1,0 +1,32 @@
+[
+    {
+        "bssid": "10:FE:ED:3B:2D:76", 
+        "channel": "48", 
+        "ssid": "TP-LINK_5GHz_FB7D76"
+    }, 
+    {
+        "bssid": "26:4E:7F:91:F2:CE", 
+        "channel": "1", 
+        "ssid": "Rosalux"
+    }, 
+    {
+        "bssid": "10:FE:ED:3B:2D:75", 
+        "channel": "6", 
+        "ssid": "orderbirdGS"
+    }, 
+    {
+        "bssid": "E8:93:09:85:7A:23", 
+        "channel": "6", 
+        "ssid": "Black is beautiful"
+    }, 
+    {
+        "bssid": "A0:63:91:DC:FB:BA", 
+        "channel": "2", 
+        "ssid": "NETGEAR81"
+    }, 
+    {
+        "bssid": "20:4E:7F:91:F2:CE", 
+        "channel": "1", 
+        "ssid": ""
+    }
+]

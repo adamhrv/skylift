@@ -4,6 +4,9 @@ SkyLift is a low-cost geolocation spoofing device. It currently uses the ESP8266
 
 This 3rd prototype version of SkyLift was further developed during a web residency with [Akademie Schloss Solitude](https://schloss-post.com/skylift-low-cost-geo-location-spoofing-device/) & [ZKM](http://webresidencies-solitude-zkm.com/). Read an [interview](https://schloss-post.com/the-future-of-living-with-surveillance/) about the project. Or build your own with the instructions below for less than $5.
 
+#### Updates
+
+- May 13, 2017: Added [new scan](tree/master/data/json/kiriakou.json) from John Kiriakou's (CIA whistleblower) talk at Gruener Salon in Berlin
 
 ![](docs/images/skylift_schloss_solitude_zkm.gif)
 
