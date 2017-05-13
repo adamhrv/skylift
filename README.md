@@ -6,7 +6,7 @@ This 3rd prototype version of SkyLift was further developed during a web residen
 
 #### Updates
 
-- May 13, 2017: Added [new scan](tree/master/data/json/kiriakou.json) from John Kiriakou's (CIA whistleblower) talk at Gruener Salon in Berlin
+- May 13, 2017: Added [new scan](data/json/kiriakou.json) from John Kiriakou's (CIA whistleblower) talk at Gruener Salon in Berlin
 
 ![](docs/images/skylift_schloss_solitude_zkm.gif)
 
