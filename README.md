@@ -28,7 +28,7 @@ For information on the original SkyLift (V0.1), see <https://ahprojects.com/note
 
 SkyLift is open source project maintained by [Adam Harvey](https://ahprojects.com) that investigates security vulnerabilities and creative opportunities in consumer-facing smartphone geolocation services. 
 
-If you're interested in obtaining a completed and ready-to-use device add yourself to my mailing list at <https://undisclosed.studio/>. Estimated release date in June 2017.
+If you're interested in obtaining a completed and ready-to-use device add yourself to my mailing list at <https://undisclosed.cc/>.
 
 
 
