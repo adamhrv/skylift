@@ -1,3 +1,12 @@
+# SkyLift V0.4
+
+Will be posted June 15
+
+- python3
+- click
+- easier to use CLI parser workflow
+- fix timestamp
+
 # SkyLift V0.3 
 
 SkyLift is a low-cost geolocation spoofing device. It currently uses the ESP8266 to broadcast WiFi Beacon Frames to exploit a longstanding (2008) vulnerability in WiFi geolocation services.
