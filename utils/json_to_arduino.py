@@ -41,7 +41,7 @@ def parse(args):
     fn, ext = os.path.splitext(bn)
 
     if args.output is None:
-        output_fn = join('ino',fn + '.txt')
+        output_fn = join('data','ino',fn + '.txt')
     else:
         output_fn = args.output
 
@@ -97,7 +97,7 @@ def parse(args):
         f.write(channels+'\n')
         f.write('#endif\n')
 
-        print '[+] Saved {} networks from {} to {}'.format(nmax,args.input, output_fn)
+        print('[+] Saved {} networks from {} to {}'.format(nmax,args.input, output_fn))
 
 
 
@@ -110,7 +110,7 @@ def main(args):
         files.append(args.input)
 
     for f in files:
-        print '[+] Parsing "{}"'.format(f) 
+        print('[+] Parsing "{}"'.format(f))
         args.input = f
         parse(args)
 

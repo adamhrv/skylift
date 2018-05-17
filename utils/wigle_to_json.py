@@ -80,21 +80,26 @@ def main(args):
     url += 'freenet=false&'
     url += 'paynet=false'
 
-    print '[+] Requesting networks'
-    wigle_networks = requests.get(url, headers={'Authentication':'Basic'},auth = (args.api_name,args.api_token))
-    wigle_networks = wigle_networks.json()['results']
+    print('[+] Requesting networks')
+    response = requests.get(url, headers={'Authentication':'Basic'},auth = (args.api_name,args.api_token))
+    response_json = response.json()
+    if (response_json['success']):
+        wigle_networks = response_json['results']
+    else:
+        print('[+] Wigle.net response error with message: ' + response_json['message'])
+        return
 
     networks = []
     for d in wigle_networks:
         d = {'ssid':d['ssid'], 'bssid':d['netid'], 'channel':d['channel']}
         networks.append(d)
     
-    output_fn = join('json',args.output)
+    output_fn = args.output
 
     with open(output_fn, 'w') as f:
         json.dump(networks, f,sort_keys = True, indent = 4)
 
-    print '[+] Found {} networks on Wigle for lat/lon: {},{}'.format(len(networks),args.lat, args.lon)
+    print('[+] Found {} networks on Wigle for lat/lon: {},{}'.format(len(networks),args.lat, args.lon))
 
 if __name__ == '__main__':
 
