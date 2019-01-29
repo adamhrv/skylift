@@ -21,7 +21,7 @@ import numpy as np
 import requests
 
 from app.models.data_types import WiFiNet
-from app.utils import file_utils, logger_utils, geo_utils, vendor_utils
+from app.utils import file_utils, logger_utils, geo_utils
 from app.settings import app_cfg as cfg
 
 
@@ -29,8 +29,6 @@ class NetParser:
 
   def __init__(self):
     self.log = logger_utils.Logger.getLogger()
-    self.vendors = vendor_utils.MACVendors()
-
 
   def sort_distance(self, networks, scan_type):
     """Sorts networks by geo distance"""
@@ -77,13 +75,6 @@ class NetParser:
       networks = [n for n in networks if float(n['qos']) > qos_min]
     if qos_max:
       networks = [n for n in networks if float(n['qos']) < qos_max]
-    return networks
-
-
-  def append_vendor(self, networks):
-    """Appends MAC vendor data to network items"""
-    for n in networks:
-      n['vendor'] = self.vendors.vendor(n['bssid'])
     return networks
 
 

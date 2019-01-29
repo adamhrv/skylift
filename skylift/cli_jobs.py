@@ -28,7 +28,7 @@ def cli(ctx, opt_verbosity):
 # Fetch Wigle data
 # ------------------------------------------------------
 @cli.command('wigle', short_help='Fetches Wigle data')
-@click.option('-j', '--jobs', 'opt_fp_jobs', required=True,
+@click.option('-j', '--jobs', 'opt_fp_jobs',
   default=cfg.FP_JOBS_WIGLE,
   help='Job file (CSV)')
 @click.option('--wigle_api_name', 'opt_api_name', envvar='WIGLE_API_NAME',
@@ -57,7 +57,53 @@ def cmd_wigle(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
     url = wigle.build_url(job['lat'], job['lon'], job['radius'], job['since'])
     log.debug(url)
     networks = wigle.fetch(url, job['lat'], job['lon'])
-    networks = parser.append_vendor(networks)
+    networks = parser.sort_distance(networks, 'wigle')
+
+    # add metadata to context
+    meta = dict(job.copy())  # copy the job variables
+    meta['type'] = 'wigle'  # add ios type
+    data = {'meta': meta, 'networks': networks}
+    fp_out = join(job['path_out'], '{}.json'.format(job['filename']))
+    if Path(fp_out).exists() and not opt_force:
+      log.error('file exists "{}". use "-f" to overwrite'.format(fp_out))
+    else:
+      file_utils.write_json(data, fp_out, minify=False)
+
+
+
+# ------------------------------------------------------
+# Process Local Wigle Data from App Scan
+# ------------------------------------------------------
+@cli.command('wigle_export', short_help='Processed Exported Wigle data')
+@click.option('-j', '--jobs', 'opt_fp_jobs',
+  default=cfg.FP_JOBS_WIGLE_EXPORT,
+  help='Job file (CSV)')
+@click.option('--wigle_api_name', 'opt_api_name', envvar='WIGLE_API_NAME',
+  help='Wigle API name (typically 35 chars)')
+@click.option('--wigle_api_key', 'opt_api_key',  envvar='WIGLE_API_KEY', 
+  help='Wigle API token (typically 35 chars)')
+@click.option('-f', '--force', 'opt_force', is_flag=True,
+  help='Force overwrite file')
+@click.pass_context
+def cmd_wigle(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
+  """Batch Fetch Wigle data from CSV"""
+
+  log = ctx.obj['log']
+  parser = NetParser()
+  wigle = wigle_utils.WigleAPI(opt_api_name, opt_api_key)
+  
+  log.info('opening: {}'.format(opt_fp_jobs))
+  jobs = pd.read_csv(opt_fp_jobs)
+  jobs['comment'] = jobs['comment'].fillna('')  # hidden or empty SSIDs
+  jobs['comment'] = jobs['comment'].astype('str') 
+  
+  for i, job in jobs.iterrows():
+    if int(job['run']) == 0:
+      continue
+    log.debug('Fetch: {filename}, {lat}, {lon}, {since}, {radius}'.format(**job))
+    url = wigle.build_url(job['lat'], job['lon'], job['radius'], job['since'])
+    log.debug(url)
+    networks = wigle.fetch(url, job['lat'], job['lon'])
     networks = parser.sort_distance(networks, 'wigle')
 
     # add metadata to context
@@ -100,7 +146,6 @@ def cmd_ios(ctx, opt_fp_jobs, opt_dir_out, opt_force):
       continue
     fp_ios = join(job['path_in'], '{}.csv'.format(job['filename']))
     networks = parser.ios_to_networks(fp_ios, job['lat'], job['lon'])
-    networks = parser.append_vendor(networks)
     meta = dict(job.copy())  # copy the job variables
     meta['type'] = 'ios'  # add ios type
     data = {'meta': meta, 'networks': networks}
