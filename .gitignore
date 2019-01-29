@@ -3,18 +3,18 @@ env/
 @eaDir
 
 # exclude everything
-data/ino/*
-data/ios/*
-data/jobs/*
-data/networks/*
-data/wigle_app/*
+#data/ino/*
+#data/ios/*
+#data/jobs/*
+#data/networks/*
+#data/wigle_app/*
 
 # exception to the rule
-!data/ino/.gitkeep
-!data/ios/.gitkeep
-!data/networks/.gitkeep
-!data/wigle_app/.gitkeep
-!data/jobs/.gitkeep
+#!data/ino/.gitkeep
+#!data/ios/.gitkeep
+#!data/networks/.gitkeep
+#!data/wigle_app/.gitkeep
+#!data/jobs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

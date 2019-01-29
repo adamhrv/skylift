@@ -1,0 +1,2 @@
+run,path_in,filename,path_out,name,location,max_networks,rssi_min,rssi_max,channel_min,channel_max
+1,../data/networks,mark_zuckerberg,../data/ino/,Location Name (NW),"Name of City, State",15,-95,-25,0,12

@@ -1,0 +1,2 @@
+run,path_out,filename,lat,lon,radius,since,comment
+1,../data/networks/,mark_zuckerberg,37.45382696,-122.13933349,1,20160101,Zucks place
