@@ -1,6 +1,7 @@
 # Custom
 env/
 @eaDir
+*_local_*
 
 # exclude everything
 #data/ino/*

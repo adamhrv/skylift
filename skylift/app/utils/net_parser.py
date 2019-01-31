@@ -37,10 +37,10 @@ class NetParser:
     if scan_type == 'wigle':
       # use distance from target (search origin) location, lowest is strongest
       return sorted(networks, key=lambda x: abs(x['distance_xy']), reverse=False)
-    elif scan_type == 'ios':
+    elif scan_type == 'ios' or scan_type == 'wigle_export':
       # use raw RSSI values, highest is strongest
       # networks_sorted = sorted(networks, key=lambda x: x['distance_xy_m'], reverse=False)
-      return sorted(networks, key=lambda x: x['rssi'], reverse=True) 
+      return sorted(networks, key=lambda x: x['rssi'], reverse=True)
     else:
       self.log.error('{} is not a valid type'.format(scan_type))
 
@@ -78,10 +78,10 @@ class NetParser:
     return networks
 
 
-  def ios_to_networks(self, fp_ios_scan, lat, lon):
+  def ios_to_networks(self, fp_in, lat, lon):
     """Reads in iOS scan file and serializes to JSON"""
-    self.log.info('opening: {}'.format(fp_ios_scan))
-    location = pd.read_csv(fp_ios_scan, comment='#', skipinitialspace=True, quotechar='"')
+    self.log.info('opening: {}'.format(fp_in))
+    location = pd.read_csv(fp_in, comment='#', skipinitialspace=True, quotechar='"')
 
     location['SSID'] = location['SSID'].fillna('')  # hidden or empty SSIDs
 
@@ -101,6 +101,34 @@ class NetParser:
     
     networks_list = [v.serialize() for k, v in networks.items()]
     return networks_list
+
+
+  def wigle_export_to_networks(self, fp_in, fp_out, comment):
+    '''Reads Wigle export CSV and generates network list
+    '''
+    df_scan = pd.read_csv(fp_in, skiprows=(1))
+    df_scan['SSID'] = df_scan['SSID'].fillna('')  # hidden or empty SSIDs
+
+    networks = {}
+    for i, scan in df_scan.iterrows():
+      bssid = scan['MAC']
+      if not len(bssid) == 17:
+        continue  # not a WiFi network
+      ssid = str(scan['SSID'])
+      lat = scan['CurrentLatitude']
+      lon = scan['CurrentLongitude']
+      if not ssid or ssid == '':
+        ssid = str(''.join(random.choice(ascii_uppercase) for i in range(6)))  # random SSID
+      rssi = int(scan['RSSI'])
+      if bssid in networks.keys():
+        networks[bssid].rssi = max(networks[bssid].rssi, rssi)  # update max RSSI 
+      else:
+        net = WiFiNet(ssid, bssid, scan['Channel'], rssi, lat, lon)
+        networks[bssid] = net
+    
+    networks_list = [v.serialize() for k, v in networks.items()]
+    return networks_list
+
 
   def summarize_locations(self, locations):
     
@@ -213,11 +241,11 @@ class NetParser:
 
     # comment
     t.append('/*')  # start Arduino comment
-    t.append(' Scan type: {}'.format(meta['type']))
+    t.append(' Scan type: {}'.format(meta.get('type','')))
     #t.append(' Scan source: "{}"'.format(meta['filename_source']))
     t.append(' Networks: {}'.format(num_nets))
-    t.append(' Target lat, lon: {}, {}'.format(meta['lat'],meta['lon']))
-    t.append(' Comment: {}'.format(meta['comment']))
+    t.append(' Target lat, lon: {}, {}'.format(meta.get('lat','') ,meta.get('lon', '')))
+    t.append(' Comment: {}'.format(meta.get('comment','')))
     t.append(' Generated: {:%b %d, %Y %H:%M:%m}'.format(datetime.datetime.now()))
     t.append(' (open + close this sketch to reload changes)')
     t.append('*/')  # end Arduino comment

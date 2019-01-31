@@ -33,7 +33,6 @@ class WiFiNet:
             'qos':self.qos,
             'lat':self.lat,
             'lon':self.lon,
-            'vendor':self.vendor,
             'distance_x':self.distance_x,
             'distance_y':self.distance_y,
             'distance_xy':self.distance_xy,

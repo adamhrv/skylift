@@ -42,7 +42,7 @@ def cmd_wigle(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
   """Batch Fetch Wigle data from CSV"""
 
   log = ctx.obj['log']
-  parser = NetParser()
+  net_parser = NetParser()
   wigle = wigle_utils.WigleAPI(opt_api_name, opt_api_key)
   
   log.info('opening: {}'.format(opt_fp_jobs))
@@ -57,7 +57,7 @@ def cmd_wigle(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
     url = wigle.build_url(job['lat'], job['lon'], job['radius'], job['since'])
     log.debug(url)
     networks = wigle.fetch(url, job['lat'], job['lon'])
-    networks = parser.sort_distance(networks, 'wigle')
+    networks = net_parser.sort_distance(networks, 'wigle')
 
     # add metadata to context
     meta = dict(job.copy())  # copy the job variables
@@ -78,39 +78,31 @@ def cmd_wigle(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
 @click.option('-j', '--jobs', 'opt_fp_jobs',
   default=cfg.FP_JOBS_WIGLE_EXPORT,
   help='Job file (CSV)')
-@click.option('--wigle_api_name', 'opt_api_name', envvar='WIGLE_API_NAME',
-  help='Wigle API name (typically 35 chars)')
-@click.option('--wigle_api_key', 'opt_api_key',  envvar='WIGLE_API_KEY', 
-  help='Wigle API token (typically 35 chars)')
 @click.option('-f', '--force', 'opt_force', is_flag=True,
   help='Force overwrite file')
 @click.pass_context
-def cmd_wigle(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
-  """Batch Fetch Wigle data from CSV"""
+def cmd_wigle(ctx, opt_fp_jobs, opt_force):
+  """Run Wigle Export Job CSV"""
 
   log = ctx.obj['log']
-  parser = NetParser()
-  wigle = wigle_utils.WigleAPI(opt_api_name, opt_api_key)
+  net_parser = NetParser()
+
+  df_jobs = pd.read_csv(opt_fp_jobs, skiprows=(0))
+  df_jobs['comment'] = df_jobs['comment'].fillna('').astype('str')
   
-  log.info('opening: {}'.format(opt_fp_jobs))
-  jobs = pd.read_csv(opt_fp_jobs)
-  jobs['comment'] = jobs['comment'].fillna('')  # hidden or empty SSIDs
-  jobs['comment'] = jobs['comment'].astype('str') 
-  
-  for i, job in jobs.iterrows():
+  for i, job in df_jobs.iterrows():
     if int(job['run']) == 0:
       continue
-    log.debug('Fetch: {filename}, {lat}, {lon}, {since}, {radius}'.format(**job))
-    url = wigle.build_url(job['lat'], job['lon'], job['radius'], job['since'])
-    log.debug(url)
-    networks = wigle.fetch(url, job['lat'], job['lon'])
-    networks = parser.sort_distance(networks, 'wigle')
+
+    fp_wigle = join(job.path_in, f'{job.filename}.csv')
+    networks = net_parser.wigle_export_to_networks(fp_wigle, job.path_out, job.comment)
+    networks = net_parser.sort_distance(networks, 'wigle_export')
 
     # add metadata to context
     meta = dict(job.copy())  # copy the job variables
-    meta['type'] = 'wigle'  # add ios type
+    meta['type'] = 'wigle_export'  # add ios type
     data = {'meta': meta, 'networks': networks}
-    fp_out = join(job['path_out'], '{}.json'.format(job['filename']))
+    fp_out = join(job['path_out'], '{}.json'.format(job.filename))
     if Path(fp_out).exists() and not opt_force:
       log.error('file exists "{}". use "-f" to overwrite'.format(fp_out))
     else:
@@ -158,7 +150,7 @@ def cmd_ios(ctx, opt_fp_jobs, opt_dir_out, opt_force):
 
 
 # --------------------------------------------------
-# Convert JSON files to Arduino headers (.h)
+# Convert JSON network files to Arduino headers (.h)
 # --------------------------------------------------
 @cli.command('arduino')
 @click.option('-j', '--jobs', 'opt_fp_jobs', required=True,
@@ -185,6 +177,7 @@ def cmd_arduino(ctx, opt_fp_jobs, opt_dir_sketch, opt_force):
     if int(job['run']) == 0:
       continue
     fp_location = join(job['path_in'], '{}.json'.format(job['filename']))
+    log.debug(fp_location)
     location = file_utils.load_json(fp_location)
     n = location['networks']
     n = parser.filter_rssi(n, job['rssi_min'], job['rssi_max'])
