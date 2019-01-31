@@ -2,6 +2,7 @@
 
 SkyLift is a low-cost DIY Wi-FI geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services. 
 
+
 Version 1.0 includes improvements:
 
 - only two commands are needed to go from GPS coords to Arduino firmware
@@ -10,11 +11,27 @@ Version 1.0 includes improvements:
 - improved timing
 - reduced SSID names to 6 characters to improve speed (ESP seems to slow down when handling too many array operations and then broadcast timing accuracy slips)
 - added notebook for plotting lat/lon (needs more work)
+- Changed to Click CLI interface
 
+```
+venv) ➜  skylift git:(master) ✗ python cli_jobs.py 
+Usage: cli_jobs.py [OPTIONS] COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]...
+
+Options:
+  -v, --verbose  Verbosity: -v DEBUG, -vv INFO, -vvv WARN, -vvvv ERROR, -vvvvv
+                 CRITICAL  [default: 4]
+  --help         Show this message and exit.
+
+Commands:
+  arduino       Converts JSON to arduino .h file
+  ios           Convert iOS Airpot utility scan to networks JSON
+  wigle         Fetches Wigle data
+  wigle_export  Processed Exported Wigle data
+```
 
 Documentation for the previous version can be found [docs/README_v1.md]
 
-## Getting Started
+## Getting Started (Python)
 
  Setup virutal environment
 
@@ -34,13 +51,26 @@ Download test data from Wigle
 - `cd skylift`
 - run `python cli_jobs.py wigle`
 
-Covnert Wigle Data to Arduino Sketch
+Convert Wigle Data to Arduino Sketch
 
 - edit `data/jobs/arduino.csv` to add file names from Wigle scan outputs
 - `python cli_jobs arduino`
 - copy the networks folder into your Arudino sketch
 
+## Getting Started (Arduino)
 
+
+
+install CP2102 driver https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers
+
+- Purchase an ESP8266 NodeMCU 12 or 12E | [eBay](http://www.ebay.com/itm/NodeMcu-Lua-WIFI-Internet-Things-development-board-based-ESP8266-CP2102-module-/201542946669?hash=item2eece54f6d:g:EOIAAOSw4q9XT5mo) (cheaper) or [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/) (quicker)
+- Install Arduino
+- Install libraries
+	- Adafruit SSD1306
+	- Adafruit GFX
+	- Ace Button
+- Add `http://arduino.esp8266.com/stable/package_esp8266com_index.json` to boards manager
+- Select board profile: `NodeMCU 1.0 (ESP12-E Module)`
 
 ------------------------
 

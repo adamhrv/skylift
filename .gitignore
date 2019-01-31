@@ -2,6 +2,7 @@
 env/
 @eaDir
 *_local_*
+.DS_Store
 
 # exclude everything
 #data/ino/*
