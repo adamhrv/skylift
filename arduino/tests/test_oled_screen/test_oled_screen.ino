@@ -1,0 +1,71 @@
+/*
+  S K Y L I F T: Test OLED
+
+  This example shows how to display text on the OLED screen
+  (No WiFi functionality in this script)
+
+  OLED Wiring:
+    D2 -> SDA
+    D3 -> SCL
+*/
+
+// OLED includes
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// OLED Display
+#define OLED_RESET 1  // nicht genutzt bei diesem Display
+Adafruit_SSD1306 display(OLED_RESET);
+
+unsigned int wifi_icon_wh = 16;
+// WiFi icon graphics for animation (sm, md, lg)
+static const unsigned char PROGMEM wifi_icon_lg[] =
+{
+  0x1f, 0xe0, 0xe0, 0x1c, 0x0, 0x0, 0x7, 0x80, 0x18, 0x60, 0x0, 0x0, 0x3, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+};
+static const unsigned char PROGMEM wifi_icon_md[] =
+{
+  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7, 0x80, 0x18, 0x60, 0x0, 0x0, 0x3, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+};
+static const unsigned char PROGMEM wifi_icon_sm[] =
+{
+  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3, 0x0, 0x0, 0x0,
+  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+};
+
+
+void setup() {
+  
+  // Initialize OLED I2C display
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+
+  // Display intro message
+  display.setTextColor(WHITE);
+  // display.setTextWrap(false);
+
+  // Display small text
+  display.setCursor(0, 0);
+  display.setTextSize(1);
+  display.println("SkyLift");
+
+  // Display large text
+  display.setCursor(0, 10);
+  display.setTextSize(2);
+  display.println("OLED Test");
+
+  // Draw Wi-Fi icon
+  display.drawBitmap(112, 0,  wifi_icon_sm, wifi_icon_wh, wifi_icon_wh, 1);
+  display.drawBitmap(112, 0,  wifi_icon_md, wifi_icon_wh, wifi_icon_wh, 1);
+  display.drawBitmap(112, 0,  wifi_icon_lg, wifi_icon_wh, wifi_icon_wh, 1);
+
+  // display to screen
+  display.display();
+}
+
+void loop() {
+}
