@@ -15,10 +15,9 @@ First you'll need to install a utility app (from Apple) to do a Wi-Fi scan
 1. Please add "Scan #"" to the subject so I know which location
 
 
-
 ## Add GPS Data
 
-Next, I'll need to know where in the world the scan is from. To get the GPS coordinates you can use Apple Maps. Perhaps Google Maps also works for this.
+Next, you'll need to know where in the world the scan is from. To get the GPS coordinates you can use Apple Maps. Perhaps Google Maps also works for this.
 
 1. Open "Maps" on iOS
 2. Click "(i)" in upper right
@@ -33,17 +32,15 @@ It's works well to save both of these as Notes on iOS device. Just make sure to 
 
 ## Multi-Position Scan
 
-
 Usually about 5 scans are needed.
 
 Below is an example of a 5-point scan. The distance between each scan should be about 25-100 ft (indoor) or 100-300 ft (outdoor)
 
 ## Random Info
 
-- it's impossible to know that you're scanning since you're phone is already doing this all the time
+- it's not possible to know that someone is scanning since you're phone is already doing this all the time
 - to securely send notes: convert to text files and send over Signal
 - I've do this whenever I go to an interesting place. Think of it like a Wi-Fi photo snapshot for your journal :)
-
 
 
 ```
