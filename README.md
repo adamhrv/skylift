@@ -1,21 +1,16 @@
-# Skylift V1.0 Jan 2019
+# SkyLift
 
-SkyLift is a low-cost DIY Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services. 
+SkyLift is a low-cost Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services.
 
+![](docs/images/skylift_angle.jpg)*SkyLift DataPools edition with the location of Mark Zuckerberg's pool*
 
-![](docs/images/skylift_angle.jpg)
+SkyLift has been used and tested for art exhibitions at galleries (Zoo Galerie, FACT, Eigen Lab), a museum show (La Gaîté Lyrique), and at events and performances (Transmediale, Cryptoraves, CCC).
 
-Version 1.0 includes improvements:
+**How Well Does it Work?**
 
-- only two commands are needed to go from GPS coords to Arduino firmware
-- job files to process Wigle request, coversion to Arduino, and iOS scan conversion
-- removed vendors (not really useful)
-- improved timing
-- reduced SSID names to 6 characters to improve speed (ESP seems to slow down when handling too many array operations and then broadcast timing accuracy slips)
-- added notebook for plotting lat/lon (needs more work)
-- Changed to Click CLI interface
+In environments where cellular strength is poor and there are few Wi-Fi networks (less than 5) SkyLift works well, sometimes perfectly spoofing everyone's location. In dense urban environments where there are dozens of Wi-Fi networks SkyLift may have little or no ability to spoof locations. In such cases using multiple devices has shown slight improvements. Multiple devices can be used with multiple scan sources to cover larger areas.
 
-Documentation for the previous version can be found [docs/README_v1.md]
+Ideal locations are generally where Wi-Fi, GPS, and cellular signals are attenuated either by the building or by bodies. Parties and conference can work well, especially when rooms are located away from roads. Basements also work well because cellular and GPS signals are typically attenuated from metal in the floors, walls, or ceilings. Outdoor street-level areas with dozens of Wi-Fi networks and strong cellular signals tend to not at all. Locations, such as open parks, with strong overhead GPS but weak/moderate cellular signal and minimal Wi-Fi networks sometimes works well. Basically, crowded indoor areas away from streets will yield best results. This is partially due to people (60% water) acting as Wi-Fi absorbers at 2.4GHz (the resonant frequency of H2O molecules).
 
 ## Quick Start
 
@@ -26,71 +21,51 @@ Documentation for the previous version can be found [docs/README_v1.md]
 - open the Arduino sketch and upload to your ESP12E
 - get full list of commands by running `python skylift/cli_jobs.py`
 
-```
-(venv) ➜  skylift git:(master) ✗ python skylift/cli_jobs.py                                         
-Usage: cli_jobs.py [OPTIONS] COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]...
 
-Options:
-  -v, --verbose  Verbosity: -v DEBUG, -vv INFO, -vvv WARN, -vvvv ERROR, -vvvvv
-                 CRITICAL  [default: 4]
-  --help         Show this message and exit.
+## Setting up SkyLift
 
-Commands:
-  arduino       Converts JSON to Arduino sketch files
-  ios           Process iOS Wi-Fi scans
-  wigle_api     Fetches Wigle API data
-  wigle_export  Processed Exported Wigle data
-```
+You can run SkyLift using only the minimal NodeMCU Lua ESP8266 12E device. The OLED, PCB, switches, and case are all optional though recommended if you want to run multiple locations. For either option there are three main parts to setting up SkyLift:
 
-## Getting Started: Python
+- Getting Wi-Fi scan data remotely or on-site 
+- Process scanned data with Python scripts to create Arduino firmware
+- Upload firmware to your ESP8266/Arduino micro-controller
 
- Setup virtual environment
+Follow the guides (in progress) to setup each step:
 
-- `git clone https://github.com/adamhrv/skylift`
-- `cd skylift`
-- `virtualenv --no-site-packages -p python3 venv `
-- `source venv/bin/activate`
-- `pip install -r requirments`
-
-Download test data from Wigle
-
-- sign up for account on <https://wigle.net>
-- `cp env-sample env`
-- `nano env/wigle-username.env.env` and add your credentials
-  - `WIGLE_API_NAME=your_username`
-  - `WIGLE_API_TOKEN=your_token`
-- `source env/wigle-username.env`
-- run `skylift/python cli_jobs.py` you should see the output below
-
-
-
-## Getting Started
-
-- [Arduino](docs/arduino.md)
-- [Data job files](docs/jobs.md)
 - [Getting Data](docs/scanning.md)
-- [Research](docs/research.md)
-- BOM (in progress)
-- PCB (in progress)
+- [Python environment](docs/python.md)
+- [Data processing job files](docs/jobs.md)
+- [Arduino](docs/arduino.md)
 
+
+You can also build your own PCBs 
+
+- [Eagle files](docs/cad.md)
+- [BOM](docs/bom.md)
+
+Or read up on more of the [research](docs/research.md) on how Beacon Frames and Wi-Fi geolocation works
 
 ### SkyLift at Exhibitions:
 
-- Cryptorave #8 Transmediale
+- Cryptorave #8 Transmediale (2019)
+- Cryptorave Barcelona @ The Influencers (2018)
+- [DataPools](https://ahprojects.com/datapools) with [Anastasia Kubrak](https://anastasiakubrak.com) for Tropez
 - [*Dark Technology Dark Web*](spektrumberlin.de/exhibitions/detail/exhibition-10-dark-technology-dark-web.html). Spektrum. Berlin. 2017.
 - [How Much of This is Fiction](http://www.fact.co.uk/projects/how-much-of-this-is-fiction.aspx). FACT. Liverpool. 2017.
 - [*Lanceurs d'alerte*](https://gaite-lyrique.net/lanceurs-dalerte-0) . La Gaîté Lyrique. Paris. 2017.
 - [*Welcome to Ecuador*](http://www.zoogalerie.fr/?p=2059&preview=true). Zoo Galerie. 2016.
 
-### SkyLift Credits:
 
-- Original concept developed in collaboration with [!Mediengruppe Bitnik](https://wwwwwwwwwwwwwwwwwwwwww.bitnik.org/) (DE)
-- SkyLift V0.1 developed in collaboration with [Surya Mattu](http://suryamattu.com) (US) 
-- V0.1 technical advisement from [Julian Oliver](https://julianoliver.com) (DE)
-- Research assistance and Python development contributions: [Leon Eckert](http://leoneckert.com/) (US/DE)
-- ["Welcome to Ecuador"](http://www.zoogalerie.fr/?p=2059&preview=true) installation (2016) curated by [Aude Launay](http://launayau.de/) for Zoo Galerie
-- ESP8266 proof of concept Beacon Frame code by <https://github.com/kripthor/WiFiBeaconJam>
-- [Schloss Solitude Web Residency](https://schloss-post.com/skylift-low-cost-geo-location-spoofing-device/)
+
+![](docs/images/wikileaks.png)
+
+### SkyLift Credits
+
+Original concept developed for and in collaboration with [!Mediengruppe Bitnik](https://wwwwwwwwwwwwwwwwwwwwww.bitnik.org/) and [Surya Mattu](http://suryamattu.com) for ["Welcome to Ecuador"](http://www.zoogalerie.fr/?p=2059&preview=true) installation (2016) curated by [Aude Launay](http://launayau.de/) for Zoo Galerie. Initial technical advisement from [Julian Oliver](https://julianoliver.com), development research contributions from [Leon Eckert](http://leoneckert.com/), and beacon broadcasting code (for ESP8266) by <https://github.com/kripthor/WiFiBeaconJam>.
+
+
+
+Development support from [Schloss Solitude Web Residency](https://schloss-post.com/skylift-low-cost-geo-location-spoofing-device/) and [tropeztropez.de](http://tropeztropez.de/)
 
 
 ### Disclaimer
@@ -101,7 +76,7 @@ Download test data from Wigle
 - SkyLift is not a GPS spoofing device. For 1.5GHz GPS spoofing, see [Spoof GPS location with low cost TX SDRs](http://hackaday.com/2016/07/19/pokemon-go-cheat-fools-gps-with-software-defined-radio/) or [Software-Defined GPS Signal Simulator](https://github.com/osqzss/gps-sdr-sim)
 - SkyLift is currently a 2.4GHz only device
 - In controlled environments where cellular signal is weak and there are few Wi-Fi networks SkyLift may work 100% but in busy urban areas with many Wi-Fi signals it may not work at all
-- Check local Wi-Fi regulations before using 
+- Check local Wi-Fi regulations before using
 
 
 ### Further Reading
@@ -111,14 +86,14 @@ Download test data from Wigle
 - [Spoofing WiFi Geolocation services](http://www.senet-int.com/2013/12/wi-fi-geo-location/) on Hackaday
 - [Don't Trust Geolocation](http://www.journaldulapin.com/2013/08/26/dont-trust-geolocation/)
 - [Device-to-Identity Linking Attack Using Targeted Wi-Fi Geolocation Spoofing](https://hal.inria.fr/hal-01176842/document)
-- [SkyLift V0.1 post on using MDK3 + Raspberry Pi](https://ahprojects.com/notebook/2016/skylift-geolocation/)
+
 
 ## History
 
-SkyLift began as a Raspberry Pi with a USB Wi-Fi dongle in 2016, then was prototyped on the Adafruit Huzzah. Several different ESP8266 modules were tried and the NodeMCU 12 was found to provide the lowest cost and comparable performance to options. It can now be built, in functional mode only, for as low as $5. 
+SkyLift began as an experiment trying to use a Raspberry Pi with a USB Wi-Fi dongle to spoof Wi-Fi access points to reproduce the research from [PacketBrücke](https://criticalengineering.org/projects/packetbridge/) and [Spoofing WiFi Geolocation services](http://www.senet-int.com/2013/12/wi-fi-geo-location/). After much frustration using an entire Linux computer for the highly-specialized task of only broadcasting Beacon Frames, the code from <https://github.com/kripthor/WiFiBeaconJam> provided a neat opportunity to try spoofing geolocation services with the ESP8266 and it actually worked. After comparing all other ESP Wi-Fi modules the NodeMCU 12E was chosen for this project because it has the lowest entry-level price for the highest functionality (USB serial converters, on-board LED, no assembly required, mass produced / easy to source). The antennae isn't as strong as the newer ESP modules but it is possible to cut the antennae's GND/PWR traces and solder in an antennae connector if you really need a long-range amplifier.
 
 
-![](docs/images/pi_esps.jpg)
+![](docs/images/pi_esps.jpg)*Earlier versions of SkyLift*
 
 
-SkyLift is open source project maintained by [Adam Harvey](https://ahprojects.com) 
+SkyLift is open source project developed and maintained by [Adam Harvey](https://ahprojects.com) 

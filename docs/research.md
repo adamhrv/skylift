@@ -6,7 +6,7 @@ SkyLift makes use of an *exploit* with WiFi geolocation services that was first 
 
 The vulnerability is difficult to deal with because Wi-Fi geolocation companies assume everyone's WiFi router, including the one inside your home, is part of a their commercial geolocation product. Whether or not this is legal or ethical should be more openly debated. 
 
-What is certain, and was already proven in 2008, is that smartphone geolocation data can be easily falsified and should not be trusted. Yet we rely on this technology for an increasing number of critical applications from the timestamps on IoT devices that use automatically set timezones to the FindMyPhone application to track a lost/stolen phone. 
+Already proven in 2008 is that smartphone geolocation data can be easily falsified and should not be trusted. Yet we rely on this technology for an increasing number of critical applications from the timestamps on IoT devices that use automatically set timezones to applications like *FindMyPhone* that track a lost/stolen phone. 
 
 The image below shows how easily I was able to trick Apple's Find my Phone service into thinking my device was at the Ecuadorian Embassy in London. (Image made with device actually in Berlin, works with Desktop or mobile device).
 
