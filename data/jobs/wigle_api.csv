@@ -1,0 +1,6 @@
+run,filepath,lat,lon,radius,since,comment
+1,data/networks/fb_central.json,37.4845432,-122.1493071,1,20170101,Facebook HQ central
+1,data/networks/fb_nw.json,37.48635,-122.150289,1,20170101,Facebook HQ North West
+1,data/networks/fb_ne.json,37.486325,-122.145772,1,20170101,Facebook HQ North East
+1,data/networks/fb_sw.json,37.483183,-122.150536,1,20170101,Facebook HQ South West
+1,data/networks/fb_se.json,37.483183,-122.150536,1,20170101,Facebook HQ South West

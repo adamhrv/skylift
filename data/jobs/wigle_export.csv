@@ -1,3 +1,3 @@
-"run","path_in","filename","path_out","comment"
-"1","../data/wigle_export/berghain/","filename1","../data/networks","Display Text 1"
-"1","../data/wigle_export/berghain/","filename2","../data/networks","Display Text 2"
+run,path_in,filename,path_out,comment
+1,../data/wigle_export/your_location/filename1.csv,../data/networks,Display Text 1
+1,../data/wigle_export/your_location/filename2.csv,../data/networks,Display Text 2
