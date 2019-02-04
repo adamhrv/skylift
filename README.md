@@ -1,6 +1,6 @@
 # SkyLift
 
-SkyLift is a low-cost Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services.
+SkyLift is a low-cost Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services. Using SkyLift you can trick your phone to appearing almost anywhere in the connected world.
 
 ![](docs/images/skylift_angle.jpg)*SkyLift DataPools edition with the location of Mark Zuckerberg's pool*
 
@@ -10,7 +10,7 @@ SkyLift has been used and tested for art exhibitions at galleries (Zoo Galerie, 
 
 In environments where cellular strength is poor and there are few Wi-Fi networks (less than 5) SkyLift works well, sometimes perfectly spoofing everyone's location. In dense urban environments where there are dozens of Wi-Fi networks SkyLift may have little or no ability to spoof locations. In such cases using multiple devices has shown slight improvements. Multiple devices can be used with multiple scan sources to cover larger areas.
 
-Ideal locations are generally where Wi-Fi, GPS, and cellular signals are attenuated either by the building or by bodies. Parties and conference can work well, especially when rooms are located away from roads. Basements also work well because cellular and GPS signals are typically attenuated from metal in the floors, walls, or ceilings. Outdoor street-level areas with dozens of Wi-Fi networks and strong cellular signals tend to not at all. Locations, such as open parks, with strong overhead GPS but weak/moderate cellular signal and minimal Wi-Fi networks sometimes works well. Basically, crowded indoor areas away from streets will yield best results. This is partially due to people (60% water) acting as Wi-Fi absorbers at 2.4GHz (the resonant frequency of H2O molecules).
+Ideal locations are generally where Wi-Fi, GPS, and cellular signals are attenuated either by the building or by bodies. Parties and conference can work well, especially when rooms are located away from roads. Basements also work well because cellular and GPS signals are typically attenuated from metal in the floors, walls, or ceilings. Outdoor street-level areas with dozens of Wi-Fi networks and strong cellular signals tend to not work at all. Locations, such as open parks, with strong overhead GPS but weak/moderate cellular signal and minimal Wi-Fi networks sometimes works well. Basically, crowded indoor areas away from streets will yield best results. This is partially due to people (60% water) which act as Wi-Fi absorbers at 2.4GHz (the resonant frequency of H2O molecules).
 
 ## Quick Start
 
@@ -19,12 +19,13 @@ Ideal locations are generally where Wi-Fi, GPS, and cellular signals are attenua
 - Get Wi-Fi data from Wigle: `python skylift/cli_jobs.py wigle_api --wigle_api_name [your_username] --wigle_api_key [your_api_key] --jobs data/jobs/wigle_api.csv`
 - Convert networks into Arduino sketch:  `python skylift/cli_jobs.py arduino --jobs data/jobs/arduino.csv`
 - open the Arduino sketch and upload to your ESP12E
+- the demo sketch should start broadcasting the networks around Facebook's corporate office in Menlo Park. The data was obtained from Wigle.net
 - get full list of commands by running `python skylift/cli_jobs.py`
 
 
 ## Setting up SkyLift
 
-You can run SkyLift using only the minimal NodeMCU Lua ESP8266 12E device. The OLED, PCB, switches, and case are all optional though recommended if you want to run multiple locations. For either option there are three main parts to setting up SkyLift:
+You can run SkyLift using only the minimal NodeMCU Lua ESP8266 12E device (for less than $5). The OLED, PCB, switches, and case are all optional though recommended if you want to run multiple locations. For either option there are three main parts to setting up SkyLift:
 
 - Getting Wi-Fi scan data remotely or on-site 
 - Process scanned data with Python scripts to create Arduino firmware
@@ -36,7 +37,6 @@ Follow the guides (in progress) to setup each step:
 - [Python environment](docs/python.md)
 - [Data processing job files](docs/jobs.md)
 - [Arduino](docs/arduino.md)
-
 
 You can also build your own PCBs 
 
@@ -62,7 +62,6 @@ Or read up on more of the [research](docs/research.md) on how Beacon Frames and 
 ### SkyLift Credits
 
 Original concept developed for and in collaboration with [!Mediengruppe Bitnik](https://wwwwwwwwwwwwwwwwwwwwww.bitnik.org/) and [Surya Mattu](http://suryamattu.com) for ["Welcome to Ecuador"](http://www.zoogalerie.fr/?p=2059&preview=true) installation (2016) curated by [Aude Launay](http://launayau.de/) for Zoo Galerie. Initial technical advisement from [Julian Oliver](https://julianoliver.com), development research contributions from [Leon Eckert](http://leoneckert.com/), and beacon broadcasting code (for ESP8266) by <https://github.com/kripthor/WiFiBeaconJam>.
-
 
 
 Development support from [Schloss Solitude Web Residency](https://schloss-post.com/skylift-low-cost-geo-location-spoofing-device/) and [tropeztropez.de](http://tropeztropez.de/)
