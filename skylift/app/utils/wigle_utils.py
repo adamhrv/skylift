@@ -50,7 +50,7 @@ class WigleAPI:
       target = (lat, lon)
 
       # authenticate and get JSON
-      self.log.info('making GET request: {}'.format(url))
+      # self.log.info('making GET request: {}'.format(url))
       wigle_data = requests.get(url,
         headers={'Authentication':'Basic'},
         auth=(self.api_name, self.api_token))

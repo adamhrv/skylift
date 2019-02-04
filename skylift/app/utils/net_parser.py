@@ -165,7 +165,7 @@ class NetParser:
       meta = location['meta']
       networks = location['networks']
 
-      nn_name = Path(meta['filename']).stem.lower()
+      nn_name = Path(meta['filepath']).stem.lower()
       nn_name_upper = '{}'.format(nn_name.upper())  
 
       t.append('#include "networks/{}.h"'.format(nn_name))
@@ -184,13 +184,13 @@ class NetParser:
 
     t.append('// Names')
     for idx, location in enumerate(locations):
-      nn_name = Path(location['meta']['filename']).stem.lower()
+      nn_name = Path(location['meta']['filepath']).stem.lower()
       t.append('place_names[{}] = name_{};'.format(idx, nn_name))
 
     t.append('')
     t.append('// Cities')
     for idx, location in enumerate(locations):
-      nn_name = Path(location['meta']['filename']).stem.lower()
+      nn_name = Path(location['meta']['filepath']).stem.lower()
       t.append('place_cities[{}] = city_{};'.format(idx, nn_name))
 
     t.append('')
@@ -201,7 +201,7 @@ class NetParser:
 
 
     for idx, location in enumerate(locations):
-      nn_name = Path(location['meta']['filename']).stem.lower()
+      nn_name = Path(location['meta']['filepath']).stem.lower()
       nn_name_upper = nn_name.upper()
 
       t.append('')
@@ -236,7 +236,7 @@ class NetParser:
     num_nets = len(networks)
 
     t = []  # text
-    nn_name = Path(meta['filename']).stem.lower()
+    nn_name = Path(meta['filepath']).stem.lower()
     nn_name_upper = 'NN_{}'.format(nn_name.upper())
 
     # comment
