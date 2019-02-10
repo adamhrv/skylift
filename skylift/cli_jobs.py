@@ -207,7 +207,7 @@ def cmd_arduino(ctx, opt_fp_jobs, opt_dir_sketch, opt_force):
       log.error('file exists "{}". use "-f" to overwrite'.format(fp_out))
     else:
       file_utils.write_text(ino_txt, fp_out)
-      num_locations += 1
+    num_locations += 1
 
   # create "networks.h" summary file
   location_summary_txt = net_parser.summarize_locations(locations)

@@ -28,7 +28,7 @@ unsigned int idx_offsets[NPLACES];
 String place_names[NPLACES];
 String place_cities[NPLACES];
 unsigned int place_idx_cur = 1; // overwritten by EEPROM value
-boolean wifi_tx_status = 0; // 1 = ON, 0 = OFF, overwritten by EEPROM value
+boolean wifi_tx_status = 1; // 1 = ON, 0 = OFF, overwritten by EEPROM value
 
 
 // include memory, then networks

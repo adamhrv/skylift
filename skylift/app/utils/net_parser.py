@@ -134,11 +134,6 @@ class NetParser:
     
     t = []
     num_nets = sum([len(loc['networks']) for loc in locations]) 
-      
-    t.append('/*')
-    t.append('\tAuto-generated file')
-    t.append('const unsigned int NNETS = {}; // copy this to main tab'.format(num_nets))
-    t.append('*/')
     t.append('')
     t.append('// Globals')
     t.append('extern const unsigned int NNETS;')

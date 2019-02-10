@@ -1,6 +1,6 @@
-run,filepath,path_out,name,location,max_networks,rssi_min,rssi_max,channel_min,channel_max
-1,data/networks/fb_central.json,data/ino/,Facebook (C),"Menlo Park, CA",15,-95,-25,0,12
-1,data/networks/fb_nw.json,data/ino/,Facebook (NW),"Menlo Park, CA",15,-95,-25,0,12
-1,data/networks/fb_ne.json,data/ino/,Facebook (NE),"Menlo Park, CA",15,-95,-25,0,12
-1,data/networks/fb_se.json,data/ino/,Facebook (SE),"Menlo Park, CA",15,-95,-25,0,12
-1,data/networks/fb_sw.json,data/ino/,Facebook (SW),"Menlo Park, CA",15,-95,-25,0,12
+run,filepath,name,location,max_networks,rssi_min,rssi_max,channel_min,channel_max
+1,data/networks/fb_central.json,Facebook (C),"Menlo Park, CA",15,-95,-25,0,12
+1,data/networks/fb_nw.json,Facebook (NW),"Menlo Park, CA",15,-95,-25,0,12
+1,data/networks/fb_ne.json,Facebook (NE),"Menlo Park, CA",15,-95,-25,0,12
+1,data/networks/fb_se.json,Facebook (SE),"Menlo Park, CA",15,-95,-25,0,12
+1,data/networks/fb_sw.json,Facebook (SW),"Menlo Park, CA",15,-95,-25,0,12

@@ -1,6 +1,6 @@
 # SkyLift
 
-SkyLift is a low-cost Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services. Using SkyLift you can trick your phone to appearing almost anywhere in the connected world.
+SkyLift is a low-cost Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services. Using SkyLift you can trick your phone to appearing almost anywhere in the connected world. Locations can be collected on-site or remotely using the Wigle.net API.
 
 ![](docs/images/skylift_angle.jpg)*SkyLift DataPools edition with the location of Mark Zuckerberg's pool*
 
@@ -10,9 +10,20 @@ SkyLift has been used and tested for art exhibitions at galleries (Zoo Galerie, 
 
 In environments where cellular strength is poor and there are few Wi-Fi networks (less than 5) SkyLift works well, sometimes perfectly spoofing everyone's location. In dense urban environments where there are dozens of Wi-Fi networks SkyLift may have little or no ability to spoof locations. In such cases using multiple devices has shown slight improvements. Multiple devices can be used with multiple scan sources to cover larger areas.
 
-Ideal locations are generally where Wi-Fi, GPS, and cellular signals are attenuated either by the building or by bodies. Parties and conference can work well, especially when rooms are located away from roads. Basements also work well because cellular and GPS signals are typically attenuated from metal in the floors, walls, or ceilings. Outdoor street-level areas with dozens of Wi-Fi networks and strong cellular signals tend to not work at all. Locations, such as open parks, with strong overhead GPS but weak/moderate cellular signal and minimal Wi-Fi networks sometimes works well. Basically, crowded indoor areas away from streets will yield best results. This is partially due to people (60% water) which act as Wi-Fi absorbers at 2.4GHz (the resonant frequency of H2O molecules).
+Ideal locations are generally where Wi-Fi, GPS, and cellular signals are attenuated either by the building or by bodies. Parties and conference can work well, especially when rooms are located away from roads. Basements also work well because cellular and GPS signals are typically attenuated from metal in the floors, walls, or ceilings. Outdoor street-level areas with dozens of Wi-Fi networks and strong cellular signals tend to not work at all. Locations, such as open parks, with strong overhead GPS but weak/moderate cellular signal and minimal Wi-Fi networks sometimes works well. Basically, crowded indoor areas away from streets will yield better results. This is partially due to people (60% water) acting as Wi-Fi absorbers at 2.4GHz (the resonant frequency of H2O molecules).
 
-## Quick Start
+## Quick Start: Arduino
+
+A geolocation demo is provided in `arduino/skylift_demo`. To run the firmware:
+
+- get a ESP8266 NodeMCU 12E (≈$5)
+- Add `http://arduino.esp8266.com/stable/package_esp8266com_index.json` to boards manager
+- Select board profile: `NodeMCU 1.0 (ESP12-E Module)`
+- Open `arduino/skylift_demo` in Arduino and upload sketch
+- ensure `wifi_tx_status = 1;` to enable Wi-Fi
+- On a standalone  ESP8266 NodeMCU 12E you won't be able to navigate the locations or toggle the Wi-Fi On/Off but you can still change the location in the code by editing `place_idx_cur = 1;` to you preferred starting location
+
+## Quick Start: Python
 
 - `git clone https://github.com/adamhrv/skylift`
 - `cd skylift`
@@ -44,6 +55,16 @@ You can also build your own PCBs
 - [BOM](docs/bom.md)
 
 Or read up on more of the [research](docs/research.md) on how Beacon Frames and Wi-Fi geolocation works
+
+
+## TODO
+
+- add lasercut files for case
+- add BOM for board and case
+- improve board (move drill holes, update text)
+- improve guides for collecting and processing data
+- add more examples
+
 
 ### SkyLift at Exhibitions:
 
