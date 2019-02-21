@@ -1,9 +1,9 @@
 ## Getting Started: Arduino
 
-- Purchase an ESP8266 NodeMCU 12 or 12E | [eBay](http://www.ebay.com/itm/NodeMcu-Lua-WIFI-Internet-Things-development-board-based-ESP8266-CP2102-module-/201542946669?hash=item2eece54f6d:g:EOIAAOSw4q9XT5mo) (cheaper) or [Amazon.com](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES/) (quicker)
-- Purchase an OLED display | [eBay](http://www.ebay.com/itm/0-96-I2C-IIC-SPI-Serial-128X64-White-OLED-LCD-LED-Display-Module-for-Arduino-/201428440360?hash=item2ee6121528:g:MOYAAOSwv0tVeD0N), [Amazon.com](https://www.amazon
-- Install Arduino
-- Install libraries
+- Purchase an ESP8266 NodeMCU 12 or 12E 
+- Purchase an OLED display 
+- Install Arduino app
+- Install Arduino libraries
 	- Adafruit SSD1306
 	- Adafruit GFX
 	- Ace Button
