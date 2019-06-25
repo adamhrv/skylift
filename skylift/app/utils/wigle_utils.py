@@ -34,7 +34,7 @@ class WigleAPI:
     url += 'latrange2=' + str(lat_range[1]) + '&'
     url += 'longrange1=' + str(lon_range[0]) + '&'
     url += 'longrange2=' + str(lon_range[1]) + '&'
-    url += 'lastupdt=' + str(opt_since) + '&'
+    url += 'lastupdt=' + str(int(opt_since)) + '&'
     url += 'freenet=false&'
     url += 'paynet=false'
     return url
@@ -60,6 +60,8 @@ class WigleAPI:
         wigle_data = wigle_data.json()['results']
       except:
         self.log.error('could not parse data: {}'.format(wigle_data))
+        self.log.error(wigle_data)
+        self.log.error(f'url: {url}')
         return []
 
       for n in wigle_data:
@@ -78,5 +80,6 @@ class WigleAPI:
         networks.append(wifi_net)
 
       # serialize network data
-      networks = [n.serialize() for n in networks]  
+      networks = [n.serialize() for n in networks]
+      self.log.debug(f'Found {len(networks)} networks')
       return networks

@@ -228,6 +228,7 @@ class NetParser:
     """Converts network data to Arduino .h network file"""
     meta = data['meta']
     networks = data['networks']
+    self.log.debug(f'{len(networks)} networks')
     num_nets = len(networks)
 
     t = []  # text

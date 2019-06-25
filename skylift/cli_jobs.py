@@ -53,6 +53,10 @@ def cmd_wigle_api(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
   jobs = pd.read_csv(opt_fp_jobs)
   jobs['comment'] = jobs['comment'].fillna('')  # hidden or empty SSIDs
   jobs['comment'] = jobs['comment'].astype('str') 
+  jobs['notes'] = jobs['notes'].fillna('')  # fill empty cells
+  jobs['notes'] = jobs['notes'].astype('str')  # fill empty cells
+  jobs['venue_name'] = jobs['venue_name'].fillna('')  # fill empty cells
+  jobs['venue_name'] = jobs['venue_name'].astype('str')  # fill empty cells
   
   for i, job in jobs.iterrows():
     try:
@@ -66,6 +70,8 @@ def cmd_wigle_api(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
   
     url = wigle.build_url(job.lat, job.lon, job.radius, job.since)
     networks = wigle.fetch(url, job.lat, job.lon)
+    if not networks:
+      return
     networks = net_parser.sort_distance(networks, 'wigle')
 
     # add metadata to context
