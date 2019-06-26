@@ -78,7 +78,7 @@ class NetParser:
     return networks
 
 
-  def ios_to_networks(self, fp_in, lat, lon):
+  def ios_to_networks(self, fp_in):
     """Reads in iOS scan file and serializes to JSON"""
     self.log.info('opening: {}'.format(fp_in))
     location = pd.read_csv(fp_in, comment='#', skipinitialspace=True, quotechar='"')
@@ -87,7 +87,11 @@ class NetParser:
 
     networks = {}
     for i, scan in location.iterrows():
-      bssid = scan['BSSID']
+
+      if 'BSSID' in scan.keys():
+        bssid = scan['BSSID']
+      elif 'BSS' in scan.keys():
+        bssid = scan['BSS']
       ssid = str(scan['SSID'])
       if not ssid or ssid == '':
         ssid = str(''.join(random.choice(ascii_uppercase) for i in range(6)))
@@ -96,7 +100,7 @@ class NetParser:
         # update RSSI if higher
         networks[bssid].rssi = max(networks[bssid].rssi, rssi)
       else:
-        net = WiFiNet(ssid, bssid, scan['Channel'], rssi, lat, lon)
+        net = WiFiNet(ssid, bssid, scan['Channel'], rssi)
         networks[bssid] = net
     
     networks_list = [v.serialize() for k, v in networks.items()]

@@ -3,7 +3,7 @@ from app.utils import geo_utils
 class WiFiNet:
 
   def __init__(self, ssid, bssid, channel, rssi, 
-    lat, lon, vendor=None, qos=0, lat_target=None, lon_target=None):
+    lat=0.0, lon=0.0, vendor=None, qos=0, lat_target=None, lon_target=None):
     self.ssid = ssid  # (str) 
     self.bssid = bssid  # (str) 00:11:22:33
     self.channel = int(channel)  # wifi channel

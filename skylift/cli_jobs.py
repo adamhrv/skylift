@@ -51,12 +51,9 @@ def cmd_wigle_api(ctx, opt_fp_jobs, opt_api_name, opt_api_key, opt_force):
   
   log.info('opening: {}'.format(opt_fp_jobs))
   jobs = pd.read_csv(opt_fp_jobs)
-  jobs['comment'] = jobs['comment'].fillna('')  # hidden or empty SSIDs
-  jobs['comment'] = jobs['comment'].astype('str') 
-  jobs['notes'] = jobs['notes'].fillna('')  # fill empty cells
-  jobs['notes'] = jobs['notes'].astype('str')  # fill empty cells
-  jobs['venue_name'] = jobs['venue_name'].fillna('')  # fill empty cells
-  jobs['venue_name'] = jobs['venue_name'].astype('str')  # fill empty cells
+  jobs['comment'] = jobs['comment'].fillna('').astype('str')
+  jobs['notes'] = jobs['notes'].fillna('').astype('str')
+  jobs['venue_name'] = jobs['venue_name'].fillna('').astype('str')
   
   for i, job in jobs.iterrows():
     try:
@@ -102,6 +99,7 @@ def cmd_wigle(ctx, opt_fp_jobs, opt_force):
   net_parser = NetParser()
 
   df_jobs = pd.read_csv(opt_fp_jobs, skiprows=(0))
+  jobs['run'] = jobs['run'].fillna(0)astype('int')
   df_jobs['comment'] = df_jobs['comment'].fillna('').astype('str')
   
   for i, job in df_jobs.iterrows():
@@ -144,17 +142,20 @@ def cmd_ios(ctx, opt_fp_jobs, opt_dir_out, opt_force):
   # load data
   log.info('opening: {}'.format(opt_fp_jobs))
   jobs = pd.read_csv(opt_fp_jobs)
+  jobs['run'] = jobs['run'].fillna(0).astype('int')
 
   for i, job in jobs.iterrows():
     # skip jobs if run == 0
     if int(job['run']) == 0:
       continue
-    fp_ios = job.filepath
-    networks = parser.ios_to_networks(fp_ios, job['lat'], job['lon'])
+    fp_in = job.path_in
+    networks = parser.ios_to_networks(fp_in)
     meta = dict(job.copy())  # copy the job variables
     meta['type'] = 'ios'  # add ios type
+    meta['filepath'] = Path(fp_in).stem
     data = {'meta': meta, 'networks': networks}
-    fp_out = join(job['path_out'], Path(job.filename).name)
+    fp_out = Path(job.path_out) / f'{Path(fp_in).stem}.json'
+    log.info(f'filepath out: {fp_out}')
     if Path(fp_out).exists() and not opt_force:
       log.error('file exists "{}". use "-f" to overwrite'.format(fp_out))
     else:
@@ -187,6 +188,8 @@ def cmd_arduino(ctx, opt_fp_jobs, opt_dir_sketch, opt_force):
   # load data
   log.info('opening: {}'.format(opt_fp_jobs))
   jobs = pd.read_csv(opt_fp_jobs)
+  jobs['run'] = jobs['run'].fillna(0).astype('int')
+  
   locations = []
   num_locations = 0
   num_networks = 0  # total number of networks for all locations
