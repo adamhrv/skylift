@@ -1,0 +1,3 @@
+run,path_in,path_out,comment
+1,../data/ios_local_/my_file_01.csv,data/networks_local_/,My First Location
+1,../data/ios_local_/my_file_02.csv,data/networks_local_/,My Second Location
