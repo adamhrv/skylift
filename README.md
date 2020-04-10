@@ -3,11 +3,11 @@
 
 ## TODO April 2020
 
-- [] improve CLI interface and data paths
-- [] fix errors in JSON meta structure
-- [] provide more examples for getting started
-- [] add original SMD gerbers
-- [] change data paths and clean up job file format
+- [ ] improve CLI interface and data paths
+- [ ] fix errors in JSON meta structure
+- [ ] provide more examples for getting started
+- [ ] add original SMD gerbers
+- [ ] change data paths and clean up job file format
 
 ## About
 
