@@ -8,6 +8,7 @@
 - [ ] provide more examples for getting started
 - [ ] add original SMD gerbers
 - [ ] change data paths and clean up job file format
+- [ ] add emoji SSID example 🙃
 
 ## About
 
