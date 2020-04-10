@@ -1,4 +1,15 @@
-# SkyLift
+# SkyLift 
+
+
+## TODO April 2020
+
+- [] improve CLI interface and data paths
+- [] fix errors in JSON meta structure
+- [] provide more examples for getting started
+- [] add original SMD gerbers
+- [] change data paths and clean up job file format
+
+## About
 
 SkyLift is a low-cost Wi-Fi geolocation spoofing device. It uses the ESP8266 to broadcast Wi-Fi Beacon Frames that exploit a longstanding (2008) vulnerability in Wi-Fi geolocation services. Using SkyLift you can trick your phone to appearing almost anywhere in the connected world. Locations can be collected on-site or remotely using the Wigle.net API.
 
