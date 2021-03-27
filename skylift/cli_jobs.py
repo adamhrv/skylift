@@ -99,7 +99,7 @@ def cmd_wigle(ctx, opt_fp_jobs, opt_force):
   net_parser = NetParser()
 
   df_jobs = pd.read_csv(opt_fp_jobs, skiprows=(0))
-  jobs['run'] = jobs['run'].fillna(0)astype('int')
+  jobs['run'] = jobs['run'].fillna(0).astype('int')
   df_jobs['comment'] = df_jobs['comment'].fillna('').astype('str')
   
   for i, job in df_jobs.iterrows():
