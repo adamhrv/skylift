@@ -1,43 +1,34 @@
 # Custom
-env/
-@eaDir
-*_local_*
+3rdparty/
+*_local_.py
+*_local_/
 .DS_Store
+*-venv/
+!projects/.gitkeep
 
-# exclude everything
-#data/ino/*
-#data/ios/*
-#data/jobs/*
-#data/networks/*
-#data/wigle_app/*
-
-# exception to the rule
-#!data/ino/.gitkeep
-#!data/ios/.gitkeep
-#!data/networks/.gitkeep
-#!data/wigle_app/.gitkeep
-#!data/jobs/.gitkeep
+# ------------------------------------------
+# GitHub Python .gitignore ruleset
+# ------------------------------------------
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.env-adamhrv*
-*_local*
-*_outdated*
+
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
+
 env/
 build/
 develop-eggs/
-dist/
+#dist/
 downloads/
 eggs/
 .eggs/
-lib/
+#lib/
 lib64/
 parts/
 sdist/
@@ -46,6 +37,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -67,6 +59,7 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+.pytest_cache/
 
 # Translations
 *.mo
@@ -75,6 +68,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
+db.sqlite3
 
 # Flask stuff:
 instance/
@@ -101,13 +95,14 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# dotenv
+# Environment
 .env
-
-# virtualenv
 .venv
+env/
 venv/
 ENV/
+env.bak/
+venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -116,8 +111,63 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
-
 # mypy
 .mypy_cache/
+
+backend/backend/
+backend/media
+backend/static/*
+
+webpack-stats.dev.json
+
+*.swp
+
+!sis/static/
+sis/static/img/*
+sis/static/feature/*
+sis/static/uploaded/*
+
+*.pkl
+
+.git-old/
+
+config/settings/production.py
+
+old-package.json
+
+#scraper/datasets/
+scraper/reports/papers/
+
+*.tar
+
+.creds
+
+site/assets/js/dist/
+site/public/user_content
+
+*.obj
+*.ply
+
+# google API key :-o
+.api_key
+
+site/datasets/final/*.csv
+
+flask.log
+flask.log.*
+
+megapixels/drc/
+megapixels/ply/
+
+data/datasets
+data/countries
+site/public/
+site/assets/test/relationships/
+site/assets/test/hierarchy/*.html
+
+scraper/db_paper_doi.csv
+scraper/db_paper_pdf.csv
+scraper/db_paper_pdf_list.csv
+scraper/ids.json
+scraper/missing.csv
+
