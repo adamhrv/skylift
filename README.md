@@ -40,7 +40,7 @@ Commands:
   convert-scan   Convert WiFi/BT network can to Networks JSON
   create-sketch  Creates new Arduino sketch from template
   ```
-  
+
 
 ## Usage
 
@@ -55,7 +55,6 @@ skylift create-sketch	-i path/to/scan.json -o path/to/scan-arduino/
 ```
 
 Customize more parameters
-```
 ```python
 skylift create-sketch
 	-i path/to/scan.json
