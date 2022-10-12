@@ -1,48 +1,68 @@
 # SkyLift
 
-## Setup
+SkyLift is an experimental Wi-Fi/BT geolocation spoofing device that uses the ESP8266 or ESP32 boards to broadcast Wi-Fi beacon frames or BT advertisements that emulate the wireless infrastructure from a remote/target location. 
 
-Python	
-- `python -m venv venv`
-- `source venv/bin/activate`
-- `pip install -r requirements.txt`
-- `cd skylift/cli/`
-- Test: `python cli.py --help` 
+Mobile devices (i.e. iOS and Android) rely on this information for core geolocation services when space-based GPS signals are weak, which often occurs in urban areas or basement-like spaces.
 
-Setup ESP	
+The project has been most successful when using multiple SkyLift devices in outdoor settings positioned similar to the real (target) routers, overwhelming the existing Wi-Fi infrastructure and confusing most mobile devices. It also worked well in crowded indoor environments where bodies (which are 2/3 water) absorb Wi-Fi energy because 2.4GHz is the resonant frequency of water molecules.
+
+## Setup Arduino IDE
+
+- Download Arduino IDE
 - Install boards in File > Preferences: Additional boards manager URLs
 - board URLs `http://arduino.esp8266.com/stable/package_esp8266com_index.json,https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
 - Select board:
 	- NodeMCU ESP32 is "ESP32 Dev Module"
-- Set upload speed in Tools > Upload Speed to 460800
+- Set upload speed in Tools > Upload Speed to maximum 460800
+
+
+## Setup Python
+
+Tested for Linux Ubuntu 20.04
+
+Python	
+```
+python -m venv venv
+source venv/bin/activate
+python setup.py develop
+skylift
+```
+
+```
+Usage: skylift [OPTIONS] COMMAND [ARGS]...
+
+  SkyLift
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  convert-scan   Convert WiFi/BT network can to Networks JSON
+  create-sketch  Creates new Arduino sketch from template
+  ```
+  
 
 ## Usage
 
 Convert WiFi/BT scan to networks JSON
 ```python
-python cli.py convert-scan 
-	-i path/to/scan.csv
-	-o path/to/scan.json
+skylift convert-scan -i path/to/scan.csv -o path/to/scan.json
 ```
 
 Create Arduino sketch from template
 ```python
-python cli.py create-sketch
-	-i path/to/scan.json
-	-o path/to/scan-arduino/
+skylift create-sketch	-i path/to/scan.json -o path/to/scan-arduino/
 ```
 
 Customize more parameters
 ```
 ```python
-python cli.py create-sketch
+skylift create-sketch
 	-i path/to/scan.json
 	-o path/to/scan-arduino/
 	--max-networks 12
 	--type esp32
 ```
-
-
 
 
 ## Troubleshooting
