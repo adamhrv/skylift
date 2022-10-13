@@ -9,10 +9,12 @@
 
 #include "display.h"
 
-byte bssid[6] = {};    // store next bssid
-uint8_t ncounter = 0;  // network counter
-uint8_t ssid_len;      // holder for ssid length
-uint8_t channel_pre = 0; 
+byte bssid[6] = {};      // store next bssid
+uint8_t ncounter = 0;    // network counter
+uint8_t ch_counter = 0;  // channel increment counter
+uint8_t ssid_len = 0;    // holder for ssid length
+uint8_t channel_pre = 0;
+uint8_t packet_length = 0;
 
 // beacon interval is 100.24 milliseconds (0x64)
 unsigned long beacon_interval_us = 102400;
@@ -49,27 +51,38 @@ extern "C" {
 // TEMPLATE:HIDDEN_SSIDS}}
 
 // {{TEMPLATE:NN
-#define NN 3  // number of networks
+#define NN 6  // number of networks
 // TEMPLATE:NN}}
-
 // {{TEMPLATE:SSIDS
 char* ssids[NN] = {
   "Network1",
   "Network2",
   "Network3",
+  "Network4",
+  "Network5",
+  "Network6",
 };
 // TEMPLATE:SSIDS}}
+// {{TEMPLATE:SSID_LENGTHS
+uint8_t ssid_lengths[NN] = { 8, 8, 8, 8, 8, 8 };
+// TEMPLATE:SSID_LENGTHS}}
 
 // {{TEMPLATE:BSSIDS
 byte bssids[NN][6] = {
-  { 0x94, 0x57, 0xA5, 0x0E, 0x57, 0x01 },
-  { 0x8A, 0x15, 0x04, 0xB8, 0x8A, 0x02 },
+  { 0x00, 0x18, 0x0A, 0x80, 0x26, 0x01 },
+  { 0x00, 0x18, 0x0A, 0x80, 0x26, 0x02 },
   { 0x00, 0x18, 0x0A, 0x80, 0x26, 0x03 },
+  { 0x00, 0x18, 0x0A, 0x80, 0x26, 0x04 },
+  { 0x00, 0x18, 0x0A, 0x80, 0x26, 0x05 },
+  { 0x00, 0x18, 0x0A, 0x80, 0x26, 0x06 },
 };
 // TEMPLATE:BSSIDS}}
 
+// {{TEMPLATE:N_CHANNELS
+#define N_CHANNELS 3
+// TEMPLATE:N_CHANNELS}}
 // {{TEMPLATE:CHANNELS
-byte channels[NN] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+byte channels[N_CHANNELS] = { 1, 6, 11 };
 // TEMPLATE:CHANNELS}}
 
 // {{TEMPLATE:DBM_LEVELS
@@ -96,7 +109,7 @@ uint8_t packet[128] = {
   /*24*/ 0x00, 0x00, 0x00, 0x00, 0x0f, 0x00, 0x00, 0x00,  // Timestamp - the number of microseconds the AP has been active
   /*32*/ 0x64, 0x00,                                      // Beacon interval = 0.102400 seconds
                                                           // /*34*/ 0x01, 0x04,                                    // Capability info
-  /*34*/ 0x31, 0x14,                                       // Capability inf
+  /*34*/ 0x31, 0x14,                                      // Capability inf
   /*36*/ 0x00
   /* SSID is added after here */
 };
@@ -152,60 +165,36 @@ long strtol(const char* __nptr, char** __endptr, int __base);  // additional fun
 // ---------------------------------------------------------------
 // Send the beacon frame
 // ---------------------------------------------------------------
-void send_beacon_frame() {
-
-  // set SSID
-#ifdef USE_HIDDEN_SSID
-  char* ssid = hidden_ssid;
-#else
-  char* ssid = ssids[ncounter];
-#endif
-
-  uint8_t ssid_len = strlen(ssid);
-  uint8_t packet_length = 51 + ssid_len;
+void send_beacon_frame(uint8_t i) {
 
   // Set BSSID
-  for (int i = 0; i < 6; i++) {
-    bssid[i] = bssids[ncounter][i];
-  }
-  for (int i = 0; i < 6; i++) {
-    packet[10 + i] = packet[16 + i] = bssid[i];
-  }
-
-  // Update the timestamp
-  // get_timestamp(time_packet);
-  set_timestamp(time_packet, ncounter);
-  for (int i = 0; i < NUM_TS_PLACES; i++) {
-    packet[24 + i] = time_packet[i];
-  }
-
-  // set the SSID length byte
+  memcpy(&bssid, bssids[i], 6);
+  memcpy(&packet[10], bssid, 6);
+  memcpy(&packet[16], bssid, 6);
+  // Set SSID
+  ssid_len = ssid_lengths[i];
   packet[37] = ssid_len;
-  for (int i = 0; i < ssid_len; i++) {
-    packet[38 + i] = ssid[i];
-  }
+  memcpy(&packet[38], ssids[i], ssid_len);
+  memcpy(&packet[38 + ssid_len], packet_tail, 13);
+  // store new packet length
+  packet_length = 51 + ssid_len;
 
-  // Add the ending packet bytes
-  for (int i = 0; i < 12; i++) {
-    packet[38 + ssid_len + i] = packet_tail[i];
-  }
-
-if (channels[ncounter] != channel_pre) {
-#ifdef ESP32
-    esp_wifi_set_channel(channels[ncounter], WIFI_SECOND_CHAN_NONE);  // esp32
-#else
-    wifi_set_channel(channels[ncounter]);           // esp8266
-#endif
-    packet[50 + ssid_len] = channels[ncounter];
-    channel_pre = channels[ncounter];
-  }
-
-// Send the packet
+  // Send the packet
 #ifdef ESP32
   esp_wifi_80211_tx(WIFI_IF_STA, packet, packet_length, 0);  // esp32
 #else
   wifi_send_pkt_freedom(packet, packet_length, 0);  // esp8266
 #endif
+  delay(1);
+}
+
+void change_channel(uint8_t i) {
+#ifdef ESP32
+  esp_wifi_set_channel(channels[i], WIFI_SECOND_CHAN_NONE);  // esp32
+#else
+  wifi_set_channel(channels[ch_counter]);           // esp8266
+#endif
+  packet[50 + ssid_len] = channels[i];
 }
 
 
@@ -235,11 +224,17 @@ void loop() {
     return;
   }
 
-  last_beacon_us = micros();
-  ncounter = (ncounter + 1) % NN;
+  // Send all ssid packets
+  for (int i = 0; i < NN; i++) {
+    send_beacon_frame(i);
+  }
 
-  // Send the packet
-  send_beacon_frame();
+  // change channel every loop
+  ch_counter = (ch_counter + 1) % N_CHANNELS;
+  change_channel(ch_counter);
+
+  // update time of broadcast
+  last_beacon_us = micros();
 
   // display
   run_display();

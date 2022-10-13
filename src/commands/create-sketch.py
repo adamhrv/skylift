@@ -23,13 +23,16 @@ from src.settings.app_cfg import INO_TEMPLATES
 @click.option('-o', '--output', 'opt_output', required=True,
   help='Output sketcch directory')
 @click.option('--max-networks', 'opt_max_networks', 
-  type=click.IntRange(1,20),
+  type=click.IntRange(1,30),
   default=10)
 @click.option('--max-rssi', 'opt_max_rssi', default=-30)
 @click.option('--min-rssi', 'opt_min_rssi', default=-100)
+@click.option('-c', '--channel', 'opt_channels', multiple=True,
+  default=[1, 6, 11],
+  help='Use multiple channels to spread across spectrum')
 @click.pass_context
 def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
-  opt_max_rssi, opt_min_rssi):
+  opt_max_rssi, opt_min_rssi, opt_channels):
   """Creates new Arduino sketch from template"""
   
   from os.path import join
@@ -41,6 +44,11 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
   from src.utils.file_utils import load_txt, write_txt, load_json
   from src.utils.file_utils import mkdirs
   from src.models.network import Network, Networks
+
+  # user input error checks
+  if not Path(opt_input).suffix.lower() == '.json':
+    LOG.error('Only JSON input supported')
+    return
 
   # copy template files
   mkdirs(opt_output)
@@ -69,30 +77,39 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
     return src[:idx_start] + str(payload) + src[idx_end:]
 
   # generate sketch data for template inserts
-  template_inserts = {}
+  templates = {}
 
   # header
-  template_inserts['HEADER'] = f'// Auto-generated from: {networks.filename}'
+  templates['HEADER'] = f'// Auto-generated from: {networks.filename}'
 
   # number networks
-  template_inserts['NN'] = f'#define NN {len(wifi_nets)}'
+  templates['NN'] = f'#define NN {len(wifi_nets)}'
+
+  # number channels
+  templates['N_CHANNELS'] = f'#define N_CHANNELS {len(opt_channels)}'
+  channels_str = ", ".join(list(map(str, opt_channels)))
+  templates['CHANNELS'] = f'byte channels[N_CHANNELS] = {{{channels_str}}};'
 
   # esp32|82666
   if opt_type == 'esp32':
-    template_inserts['ESP'] = "#define ESP32 1"
+    templates['ESP'] = "#define ESP32 1"
   elif opt_type == 'esp8266':
-    template_inserts['ESP'] = "#define ESP8266 1"
+    templates['ESP'] = "#define ESP8266 1"
 
   # ssids, bssids, channels, dbm_levels
   ssids = ['char* ssids[NN] = {']
   bssids = ['byte bssids[NN][6] = {']
+  ssid_lengths = ['uint8_t ssid_lengths[NN] = {']
   for wifi_net in wifi_nets:
-    ssids.append(f'\t"{wifi_net.ssid}",')
-    bssids.append(f'\t{wifi_net.bssid_as_hex_list_ino()},')
+    ssids.append(f'\t"{wifi_net.ssid}", ')
+    ssid_lengths.append(f'\t{len(wifi_net.ssid)}, ')
+    bssids.append(f'\t{wifi_net.bssid_as_hex_list_ino()}, ')
   ssids.append('};')
   bssids.append('};')
-  template_inserts['SSIDS'] = '\n'.join(ssids)
-  template_inserts['BSSIDS'] = '\n'.join(bssids)
+  ssid_lengths.append('};')
+  templates['SSIDS'] = '\n'.join(ssids)
+  templates['SSID_LENGTHS'] = '\n'.join(ssid_lengths)
+  templates['BSSIDS'] = '\n'.join(bssids)
 
   import random
   opts_channels = [1, 6, 11]
@@ -101,16 +118,16 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
   for c in use_channels:
     channels.append(f'\t{c},')
   channels.append('};')
-  template_inserts['CHANNELS'] = '\n'.join(channels)
+
 
   # hidden ssids
   opt_hidden_ssids = False
   if opt_hidden_ssids:
-    template_inserts['HIDDEN_SSIDS'] = "#define USE_HIDDEN_SSIDS"
+    templates['HIDDEN_SSIDS'] = "#define USE_HIDDEN_SSIDS"
   else:
-    template_inserts['HIDDEN_SSIDS'] = "// #define USE_HIDDEN_SSIDS"
+    templates['HIDDEN_SSIDS'] = "// #define USE_HIDDEN_SSIDS"
 
-  for tag, payload in template_inserts.items():
+  for tag, payload in templates.items():
     t = insert_template(t, tag, payload)
 
   # write sketch data
