@@ -14,7 +14,7 @@ import colorlog
 
 # Project directory
 SELF_CWD = os.path.dirname(os.path.realpath(__file__))  # this file
-DP_ROOT = str(Path(SELF_CWD).parent.parent.parent)
+DP_ROOT = str(Path(SELF_CWD).parent.parent)
 
 
 # ---------------------------------------------------------------------------
