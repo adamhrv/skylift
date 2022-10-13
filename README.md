@@ -1,5 +1,7 @@
 # SkyLift
 
+![](archive/docs/images/skylift_angle.jpg)
+
 SkyLift is an experimental Wi-Fi/BT geolocation spoofing device that uses the ESP8266 or ESP32 boards to broadcast Wi-Fi beacon frames or BT advertisements that emulate the wireless infrastructure from a remote/target location. 
 
 Mobile devices (i.e. iOS and Android) rely on this information for core geolocation services when space-based GPS signals are weak, which often occurs in urban areas or basement-like spaces.
