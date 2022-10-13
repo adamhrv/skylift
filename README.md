@@ -6,6 +6,8 @@ Mobile devices (i.e. iOS and Android) rely on this information for core geolocat
 
 The project has been most successful when using multiple SkyLift devices in outdoor settings positioned similar to the real (target) routers, overwhelming the existing Wi-Fi infrastructure and confusing most mobile devices. It also worked well in crowded indoor environments where bodies (which are 2/3 water) absorb Wi-Fi energy because 2.4GHz is the resonant frequency of water molecules.
 
+However, it's still unclear what the best settings are for the Wi-Fi packet structure, what other factors affect ability to override core geolocation services, and if mobile operating systems have integrated anti-spoofing technologies. Most likely success with this code will be limited in general settings, though the low cost of prototyping hardware and potentially significant results make it a worthwhile project to explore further.
+
 ## Setup Arduino IDE
 
 - Download Arduino IDE
