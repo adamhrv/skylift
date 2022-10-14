@@ -134,4 +134,4 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
   write_txt(fp_dst, t)
 
 
-  LOG.info(f'Created "{opt_output}"')
+  LOG.info(f'Created "{opt_output}" with {len(wifi_nets)} wifi networks')

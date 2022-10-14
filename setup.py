@@ -19,6 +19,6 @@ setup(
         'License :: OSI Approved :: MIT License'
     ],
      entry_points = {
-        'console_scripts': ['skylift=src.my_cli:cli'],
+        'console_scripts': ['skylift=src.cli:cli'],
     }
 )
