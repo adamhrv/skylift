@@ -51,6 +51,7 @@ def cli(ctx, opt_input, opt_output):
     df = pd.read_csv(opt_input, header=1, usecols=dtypes.keys(), dtype=dtypes)
     df.rename(columns=WIGLE_COL_MAPPINGS, inplace=True)
     df = df.fillna(value={'ssid':''})
+    df = df.sort_values(by=['rssi'], ascending=False).drop_duplicates('bssid')
 
     # group by wifi, ble (ignore non-ble)
     df_wifi = df[df['Type'] == 'WIFI'].drop('Type', axis=1)
