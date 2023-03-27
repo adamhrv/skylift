@@ -9,10 +9,11 @@
 
 #include "display.h"
 
-byte bssid[6] = {};      // store next bssid
-uint8_t ncounter = 0;    // network counter
-uint8_t ch_counter = 0;  // channel increment counter
-uint8_t ssid_len = 0;    // holder for ssid length
+byte bssid[6] = {};        // store next bssid
+uint8_t ncounter = 0;      // network counter
+uint8_t ch_counter = 0;    // channel increment counter
+uint8_t loop_counter = 0;  // loop counter interval for changing channel
+uint8_t ssid_len = 0;      // holder for ssid length
 uint8_t channel_pre = 0;
 uint8_t packet_length = 0;
 
@@ -24,12 +25,18 @@ char* hidden_ssid = "\x00";  // 0-length SSID (Network name unavailable)
 byte time_packet[NUM_TS_PLACES];  // placeholder for timestamp data#define NUM_TS_PLACES 8
 char cc[2];                       // placeholer for timestamp data
 
+// {{TEMPLATE:WIFI_POWER_DBM
+float WIFI_POWER_DBM = 10.5;  // ESP8266 only
+// TEMPLATE:WIFI_POWER_DBM}}
+
+
+
 
 // ---------------------------------------------------------
 // START template data
 // ---------------------------------------------------------
 // {{TEMPLATE:ESP
-#define ESP32 1
+// #define ESP32 1
 // TEMPLATE:ESP}}
 
 #ifdef ESP32
@@ -165,17 +172,20 @@ long strtol(const char* __nptr, char** __endptr, int __base);  // additional fun
 // ---------------------------------------------------------------
 // Send the beacon frame
 // ---------------------------------------------------------------
-void send_beacon_frame(uint8_t i) {
+void send_beacon_frame(uint8_t i, uint8_t c) {
 
   // Set BSSID
   memcpy(&bssid, bssids[i], 6);
   memcpy(&packet[10], bssid, 6);
   memcpy(&packet[16], bssid, 6);
+
   // Set SSID
   ssid_len = ssid_lengths[i];
   packet[37] = ssid_len;
   memcpy(&packet[38], ssids[i], ssid_len);
   memcpy(&packet[38 + ssid_len], packet_tail, 13);
+  packet[50 + ssid_len] = channels[c];
+
   // store new packet length
   packet_length = 51 + ssid_len;
 
@@ -185,16 +195,17 @@ void send_beacon_frame(uint8_t i) {
 #else
   wifi_send_pkt_freedom(packet, packet_length, 0);  // esp8266
 #endif
-  delay(1);
 }
+
 
 void change_channel(uint8_t i) {
 #ifdef ESP32
+  // esp_wifi_set_promiscuous(false);
   esp_wifi_set_channel(channels[i], WIFI_SECOND_CHAN_NONE);  // esp32
+  // esp_wifi_set_promiscuous(true);
 #else
-  wifi_set_channel(channels[ch_counter]);           // esp8266
+  wifi_set_channel(channels[i]);                    // esp8266
 #endif
-  packet[50 + ssid_len] = channels[i];
 }
 
 
@@ -209,7 +220,7 @@ void setup() {
   WiFi.setTxPower(WIFI_POWER_19dBm);
   esp_wifi_set_channel(channels[0], WIFI_SECOND_CHAN_NONE);
 #else
-  WiFi.setOutputPower(20.5);
+  WiFi.setOutputPower(WIFI_POWER_DBM);
   wifi_set_opmode(STATION_MODE);
   wifi_promiscuous_enable(1);
 #endif
@@ -224,14 +235,19 @@ void loop() {
     return;
   }
 
+  // change channel every loop
+  loop_counter += 1;
+  if (loop_counter > 10) {
+    ch_counter = (ch_counter + 1) % N_CHANNELS;
+    change_channel(ch_counter);
+    loop_counter = 0;
+  }
+  
   // Send all ssid packets
   for (int i = 0; i < NN; i++) {
-    send_beacon_frame(i);
+    send_beacon_frame(i, ch_counter);
+    delay(1);
   }
-
-  // change channel every loop
-  ch_counter = (ch_counter + 1) % N_CHANNELS;
-  change_channel(ch_counter);
 
   // update time of broadcast
   last_beacon_us = micros();
