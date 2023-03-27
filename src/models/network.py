@@ -41,7 +41,7 @@ class Networks(BaseModel):
   wifi: List[Network]=[]
   bt: List[Network]=[]
 
-  def __post_init__(self):
+  def model_post_init(self):
     # sort by descending rssi values
     self.wifi = sorted(self.wifi, key=lambda x: (x.rssi), reverse=True)
     self.bt = sorted(self.bt, key=lambda x: (x.rssi), reverse=True)

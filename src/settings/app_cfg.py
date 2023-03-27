@@ -79,8 +79,8 @@ DP_ARDUINO = join(DP_ROOT, 'arduino')
 DP_PROJECTS = join(DP_ROOT, 'projects')
 DP_JOBS = join(DP_ROOT, 'jobs')
 DP_CONFIGS = join(DP_ROOT, 'configs')
-DP_TEMPLATE_ESP32 = join(DP_ROOT, 'arduino/templates/skylift_esp32/')
-DP_TEMPLATE_ESP8266 = join(DP_ROOT, 'arduino/templates/skylift_esp8266/')
+DP_TEMPLATE_ESP32 = join(DP_ROOT, 'arduino/templates/skylift_esp32_esp8266/')
+DP_TEMPLATE_ESP8266 = join(DP_ROOT, 'arduino/templates/skylift_esp32_esp8266/')
 INO_TEMPLATES = {
   'esp32': DP_TEMPLATE_ESP32,
   'esp8266': DP_TEMPLATE_ESP8266,

@@ -82,6 +82,7 @@ def cli(ctx, opt_input, opt_output):
   if scan_data:
     scan_data['filename'] = Path(opt_input).name
     nets = Networks(**scan_data)
+    nets.model_post_init()
     write_json(opt_output, nets.dict(), minify=False)
     LOG.info(f'Wrote {len(nets.wifi)} WiFi networks, {len(nets.bt)} Bluetooth networks')
   else:

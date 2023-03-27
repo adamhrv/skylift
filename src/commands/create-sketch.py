@@ -15,7 +15,7 @@ from src.settings.app_cfg import INO_TEMPLATES
 @click.command()
 @click.option('-i', '--input', 'opt_input', required=True,
   help='Path to networks JSON')
-@click.option('-t', '--type', 'opt_type', 
+@click.option('--board', 'opt_board', 
   type=click.Choice(INO_TEMPLATES.keys()),
   show_default=True,
   default='esp32',
@@ -28,11 +28,12 @@ from src.settings.app_cfg import INO_TEMPLATES
 @click.option('--max-rssi', 'opt_max_rssi', default=-30)
 @click.option('--min-rssi', 'opt_min_rssi', default=-100)
 @click.option('-c', '--channel', 'opt_channels', multiple=True,
-  default=[1, 6, 11],
+  default=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
   help='Use multiple channels to spread across spectrum')
+@click.option('--dbm', 'opt_wifi_dbm', default=19.5, type=float)
 @click.pass_context
-def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
-  opt_max_rssi, opt_min_rssi, opt_channels):
+def cli(ctx, opt_input, opt_board, opt_output, opt_max_networks,
+  opt_max_rssi, opt_min_rssi, opt_channels, opt_wifi_dbm):
   """Creates new Arduino sketch from template"""
   
   from os.path import join
@@ -52,8 +53,8 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
 
   # copy template files
   mkdirs(opt_output)
-  dp_src = INO_TEMPLATES[opt_type]
-  for fp_src in iglob(join(INO_TEMPLATES[opt_type], '*')):
+  dp_src = INO_TEMPLATES[opt_board]
+  for fp_src in iglob(join(INO_TEMPLATES[opt_board], '*')):
     fp_dst = join(opt_output, Path(fp_src).name)
     shutil.copyfile(fp_src, fp_dst)
   fp_src = join(opt_output, f'{Path(dp_src).name}.ino')
@@ -91,9 +92,9 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
   templates['CHANNELS'] = f'byte channels[N_CHANNELS] = {{{channels_str}}};'
 
   # esp32|82666
-  if opt_type == 'esp32':
+  if opt_board == 'esp32':
     templates['ESP'] = "#define ESP32 1"
-  elif opt_type == 'esp8266':
+  elif opt_board == 'esp8266':
     templates['ESP'] = "#define ESP8266 1"
 
   # ssids, bssids, channels, dbm_levels
@@ -119,6 +120,8 @@ def cli(ctx, opt_input, opt_type, opt_output, opt_max_networks,
     channels.append(f'\t{c},')
   channels.append('};')
 
+  # wifi power
+  templates['WIFI_POWER_DBM'] = f'float WIFI_POWER_DBM = {opt_wifi_dbm};  // ESP8266 only'
 
   # hidden ssids
   opt_hidden_ssids = False

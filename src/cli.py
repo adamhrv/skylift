@@ -15,7 +15,7 @@
 import click
 
 class ClickSimple:
-  """Wrapper generator for custom Click CLI's"""
+  """Wrapper generator for custom Click CLI"""
 
   def __init__(self):
     pass
@@ -71,10 +71,6 @@ class ClickSimple:
 
 from pathlib import Path
 DP_CMDS = Path(Path(__file__).parent / 'commands').as_posix()
-# DP_SRC = Path(Path(__file__).parent / 'app').as_posix()
-# print(DP)
-# import sys
-# sys.path.append(DP_SRC)
 @click.group(cls=ClickSimple.create(DP_CMDS))
 @click.pass_context
 def cli(ctx):
