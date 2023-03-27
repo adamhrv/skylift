@@ -65,7 +65,7 @@ skylift create-sketch
 	-i path/to/scan.json
 	-o path/to/scan-arduino/
 	--max-networks 12
-	--type esp32
+	--board esp32
 ```
 
 
